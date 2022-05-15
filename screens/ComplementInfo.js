@@ -4,7 +4,7 @@ import { Input, Icon, NativeBaseProvider, Button, InputRightAddon } from 'native
 import { FontAwesome5 } from '@expo/vector-icons'
 import bc from '../assets/bc.jpg'
 import { useNavigation } from '@react-navigation/native';
-
+import 'react-native-gesture-handler'
 const ComplementInfo = () => {
     const navigation = useNavigation();
    const [name, setName] = useState('fddd')

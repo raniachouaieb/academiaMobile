@@ -9,6 +9,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { BottomSheet } from 'react-native-btr';
 import avatar from '../assets/avatr.jpg';
 import enf2 from '../assets/enf2.jpg';
+import 'react-native-gesture-handler'
+
 const Profile = () => {
     const navigation = useNavigation();
     const [visible, setVisible] = useState(false);

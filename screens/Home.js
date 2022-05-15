@@ -9,9 +9,8 @@ import schedule from '../assets/schedule.png'
 import burger from '../assets/burger.png'
 import conv from '../assets/newsletter.png'
 import comment from '../assets/comment.png'
-import { FontAwesome5 } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native';
-
+import 'react-native-gesture-handler'
 const Home = () => {
 
   
@@ -63,7 +62,7 @@ const Home = () => {
                         </View>
                         <View style={styles.box}>
                             <View style={styles.inner}>
-                                <TouchableOpacity onPress={()=> navigation.navigate('Contact')}>
+                                <TouchableOpacity onPress={()=> navigation.navigate('Profile')}>
                             <Image source={schedule} style={styles.img}/>
                                 <Text style={styles.tache}>Emploi</Text>
                                 </TouchableOpacity>
