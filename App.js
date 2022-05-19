@@ -17,7 +17,7 @@ import Profile from './screens/Profile'
 import Contact from './screens/Contact'
 import ComplementInfo from './screens/ComplementInfo'
 import CustomDrawer from "./components/CustomDrawer";
-
+import MultiStepForm from "./screens/MultiStepForm";
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -58,6 +58,7 @@ function App(){
             <Stack.Screen name="ListConv" component={ListConv}/>
             <Stack.Screen name="ForgotPass" component={ForgotPass}/>
             <Stack.Screen name="Contact" component={Contact}/>
+            <Stack.Screen name="MultiStepForm" component={MultiStepForm}/>
 
 
 

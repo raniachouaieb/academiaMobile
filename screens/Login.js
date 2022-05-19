@@ -92,7 +92,7 @@ const Login = () => {
             </View>
             <View style={styles.middle}>
                 <Text style={styles.textInscrire}>Vous n'avez pas encore un compte?</Text>
-                <TouchableOpacity onPress={()=>navigation.navigate("Register")}>
+                <TouchableOpacity onPress={()=>navigation.navigate("MultiStepForm")}>
                 <Text style={styles.register}>S'inscrire</Text>
             </TouchableOpacity>
             </View>
