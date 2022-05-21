@@ -8,7 +8,7 @@ import Submit from './stepForm/Submit'
 import InfoParent from "./stepForm/InfoParent";
 
 const defaultData= {
-    nomPere:"amir",  prenomPere:"",  telPere:"",  professionPere:"",
+    nomPere:"",  prenomPere:"",  telPere:"",  professionPere:"",
     nomMere:"",  prenomMere:"",  telmere:"",  professionMere:"",
 };
 

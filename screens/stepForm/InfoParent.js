@@ -1,14 +1,17 @@
 import React from 'react'
 import {View, Text, ImageBackground,Dimensions, StyleSheet} from 'react-native'
-import {  NativeBaseProvider } from 'native-base'
+import { NativeBaseProvider} from 'native-base'
 import bc from '../../assets/bc.jpg';
 import {TextField} from "@material-ui/core";
-const InfoParent = ()=>{
+import Button from '@material-ui/core/Button'
+
+const InfoParent = ({ formData, setForm, navigation})=>{
+
     return (
         <ImageBackground source={bc} style={styles.container}>
 
         <View style={styles.middle}>
-            <Text >Père</Text>
+            <Text style={styles.titre}>1.Père</Text>
             <View style={styles.cardContainer}>
                 <TextField
                 label="nom" name="nomPere"   margin="normal" variant="outlined"
@@ -17,13 +20,13 @@ const InfoParent = ()=>{
                     label="prénom" name="prenomPere"  margin="normal" variant="outlined"
                 />
                 <TextField
-                    label="prfession" name="professionPere"  margin="normal" variant="outlined"
+                    label="profession" name="professionPere" margin="normal" variant="outlined"
                 />
                 <TextField
                     label="Télephone" name="telPere"  margin="normal" variant="outlined"
                 />
             </View>
-            <Text>Mère</Text>
+            <Text style={styles.titre}>2.Mère</Text>
             <View style={styles.cardContainer}>
                 <TextField
                     label="nom" name="nomMere"   margin="normal" variant="outlined"
@@ -37,6 +40,11 @@ const InfoParent = ()=>{
                 <TextField
                     label="Télephone" name="telMere"  margin="normal" variant="outlined"
                 />
+            </View>
+            <View >
+                <Button onClick={()=> navigation.next()}  >
+                    Suivant
+                </Button>
             </View>
         </View>
 
@@ -79,5 +87,19 @@ const styles = StyleSheet.create({
         shadowRadius: -1,
         elevation: 9,
         opacity:0.9,
+    },
+    titre:{
+        fontSize:22,
+        fontWeight:'750',
+        color:"#00b894"
+    },
+    buttonStyle:{
+        marginTop: 15,
+        marginBottom:15,
+        marginLeft:15,
+        marginRight:15,
+    },
+    buttonDesign:{
+        backgroundColor:'#026efd'
     },
 })

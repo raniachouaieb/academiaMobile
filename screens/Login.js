@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity} from 'react-native'
 import { Input, Icon, NativeBaseProvider, Button, InputRightAddon } from 'native-base'
 import { FontAwesome5 } from '@expo/vector-icons'
@@ -7,7 +7,32 @@ import logo from '../assets/logo.png';
 import { useNavigation } from '@react-navigation/native';
 
 const Login = () => {
+    const [email, setEmail]= useState();
+    const [password, setPassword]= useState();
     const navigation = useNavigation();
+    const URI = 'http://localhost:8000';
+    myfunc =  async ()=>{
+        /*await fetch(URI + '/api/auth/login',{
+            method:'POST',
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'mode': 'no-cors'
+            },
+            body: JSON.stringify({"email": email, "password": password})
+        }).then(res => res.json())
+            .then(resData =>{
+                console.log(resData);
+            });*/
+
+        navigation.navigate("Home");
+
+    }
+
+    function myfunc () {
+        alert(email);
+    }
+
     return(
         <ImageBackground source={bc} style={styles.container}>
         <View >
@@ -31,8 +56,11 @@ const Login = () => {
                         _dark={{
                             color:"gray.300",
                         }}
+
                         />
                     }
+                    value={email}
+                    onChangeText={(value)=> setEmail(value)}
                     variant = "outline"
                     placeholder = "Email"
                     _light={{
@@ -65,6 +93,8 @@ const Login = () => {
                             />
                             
                         }
+                        value={password}
+                        onChangeText={(value)=> setPassword(value)}
                         variant= "outline"
                         secureTextEntry={true}
                         placeholder="Mot de passe"
@@ -86,7 +116,7 @@ const Login = () => {
 
             {/*Button */}
             <View style={styles.buttonStyle}>
-                <Button style={styles.buttonDesign} onPress={()=> navigation.navigate("Home")}>
+                <Button style={styles.buttonDesign} onPress={myfunc}>
                     LOGIN
                 </Button>
             </View>

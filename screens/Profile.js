@@ -131,7 +131,7 @@ const Profile = () => {
                                 <Button style={styles.buttonDesign} onPress={()=> navigation.navigate("#")}>
                                     Modifier
                                 </Button>
-                            </View>
+                         </View>
                         <View style={styles.middle}>
                             <View style={styles.box}>
                                 <View style={styles.inner}>

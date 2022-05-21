@@ -14,7 +14,7 @@ const ListTask = () => {
         <View >
             <View style={styles.header}>
                 <TouchableOpacity 
-                   onPress={()=> navigation.navigate("Home")}>
+                   onPress={()=> navigation.navigate("Task")}>
                    <FontAwesome5 name="arrow-left" color="white" size="sm"
                     m={2}
                       _light={{
