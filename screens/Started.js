@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
         marginTop:614,
         width:355,
-        display: 'block',
+
         padding: 12 ,
         textAlign:'center',
         color: '#fff'

@@ -8,9 +8,9 @@ const Header = (props) => {
 console.log(props);
     return(
        <View style={styles.header}>
-                <TouchableOpacity 
-                     onPress={()=> navigation.navigate("#")}>
-                      <FontAwesome5 name="arrow-left" color="white" size="sm"
+                <TouchableOpacity
+                    onPress={props.pressHandler } >
+                      <FontAwesome5 name="arrow-left" color="white" size={24}
                       m={2}
                      _light={{
                         color:"black"
@@ -22,7 +22,7 @@ console.log(props);
                                 
                     />
                  </TouchableOpacity>
-           <Text style={styles.headerText}>uu</Text>
+           <Text style={styles.headerText}>{props.title}</Text>
            <SafeAreaView>
                 <TouchableOpacity style={styles.bar}
                     onPress={()=> navigation.navigate("#")}>
@@ -33,22 +33,16 @@ console.log(props);
     )
 }
 
-export default ()=>{
-    return (
-        <NativeBaseProvider>
-            <Header/>
-        </NativeBaseProvider>
-
-    )
-}
+export default Header
 
 const styles = StyleSheet.create({
     
         header:{
             flex: 1,
-            width: 360,
+            width: 375,
             height:20,
             padding:15,
+            alignItems:'center',
           flexDirection:'row',
           justifyContent:'space-between',
             backgroundColor: '#17a2b8',

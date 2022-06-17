@@ -5,37 +5,16 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import bc from '../assets/bc.jpg';
 import logo from '../assets/logo.png';
 import { useNavigation } from '@react-navigation/native';
+import Header from "./Header";
 
 const Suggestion = () => {
     const navigation = useNavigation();
     return(
         <ImageBackground source={bc} style={styles.container}>
-        <View >
-                    <View style={styles.header}>
-                            <TouchableOpacity 
-                                onPress={()=> navigation.navigate("Home")}>
-                                <FontAwesome5 name="arrow-left" color="white" size="sm"
-                                m={2}
-                                _light={{
-                                    color:"black"
-                                }}
-                                _dark={{
-                                    color:"gray.100.300"
-                                }}
-                                
-                                
-                                />
-                            </TouchableOpacity>
-                            <Text style={styles.text}>Suggestion</Text>
-                            
-                        <SafeAreaView >
-                        <TouchableOpacity style={styles.bar}
-                        onPress={()=> navigation.navigate("#")}>
-                            <FontAwesome5 name="bars" size={24} color="white"/>
-                        </TouchableOpacity>
-                </SafeAreaView>
-                    </View>
-                    
+            <Header title={'Suggestion'} pressHandler={() => navigation.navigate('Home')}/>
+
+            <View >
+
             <View style={styles.middle}>
                 <Image style={styles.img}source={logo}/>
             </View>

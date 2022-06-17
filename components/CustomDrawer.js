@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Text, ImageBackground, Image, StyleSheet} from 'react-native'
 import { DrawerContentScrollView, DrawerItemList} from "@react-navigation/drawer";
-import bg from '../assets/bg.jpg'
+import bg from '../assets/bgg1.jpg'
 import parent from '../assets/parent.jpg'
 import Ionicons from '@expo/vector-icons/Ionicons';
 
@@ -10,7 +10,7 @@ const CustomDrawer = (props)=>{
         <View style={{flex: 1}}>
             <DrawerContentScrollView
                 {...props}
-                contentContainerStyle={{backgroundColor: '#8200d6'}}>
+                contentContainerStyle={{backgroundColor: '#fff'}}>
                 <ImageBackground source={bg} style={{padding:20}}>
                     <Image
                         source={parent}
@@ -37,12 +37,15 @@ const styles = StyleSheet.create({
         height:80,
         width:80,
         borderRadius:40,
-        marginBottom:10
+        marginBottom:10,
+
+
     },
     name:{
         color:'#fff',
         fontSize:18,
         fontWeight:'700'
+
     },
     itemList:{
         flex:1,

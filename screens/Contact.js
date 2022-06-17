@@ -11,30 +11,7 @@ const Contact = () => {
     return(
             <ImageBackground source={bc} style={styles.container} >
                 <View>
-                        <View style={styles.header}>
-                            <TouchableOpacity 
-                                onPress={()=> navigation.navigate("Home")}>
-                                <FontAwesome5 name="arrow-left" color="white" size="sm"
-                                m={2}
-                                _light={{
-                                    color:"black"
-                                }}
-                                _dark={{
-                                    color:"gray.100.300"
-                                }}
-                                
-                                
-                                />
-                            </TouchableOpacity>
-                            <Text style={styles.text}>Contacter nous</Text>
-                            
-                            <SafeAreaView >
-                                <TouchableOpacity style={styles.bar}
-                                onPress={()=> navigation.navigate("#")}>
-                                    <FontAwesome5 name="bars" size={24} color="white"/>
-                                </TouchableOpacity>
-                            </SafeAreaView>
-                        </View> 
+
                         <View style={styles.middle}>
                             <Image style={styles.img}
                             source={logo}/> 

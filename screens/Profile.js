@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity, SafeAreaView} from 'react-native'
-import { Input, Icon, NativeBaseProvider, Button, InputRightAddon } from 'native-base'
+import {Input, Icon, NativeBaseProvider, Button, InputRightAddon, ScrollView} from 'native-base'
 import { FontAwesome5 } from '@expo/vector-icons'
 import bc from '../assets/bc.jpg'
 import parent from '../assets/parent.jpg'
@@ -10,6 +10,7 @@ import { BottomSheet } from 'react-native-btr';
 import avatar from '../assets/avatr.jpg';
 import enf2 from '../assets/enf2.jpg';
 import 'react-native-gesture-handler'
+import GlobalStyles from "../assets/GlobalStyles";
 
 const Profile = () => {
     const navigation = useNavigation();
@@ -45,32 +46,10 @@ const Profile = () => {
         setImage(pickerResult.uri);
       }
     return(
+        <ScrollView>
             <ImageBackground source={bc} style={styles.container} >
                 <View>
-                        <View style={styles.header}>
-                            <TouchableOpacity 
-                                onPress={()=> navigation.navigate("Home")}>
-                                <FontAwesome5 name="arrow-left" color="white" size="sm"
-                                m={2}
-                                _light={{
-                                    color:"black"
-                                }}
-                                _dark={{
-                                    color:"gray.100.300"
-                                }}
-                                
-                                
-                                />
-                            </TouchableOpacity>
-                            <Text style={styles.text}>Profile</Text>
-                            
-                            <SafeAreaView >
-                                <TouchableOpacity style={styles.bar}
-                                onPress={()=> navigation.navigate("#")}>
-                                    <FontAwesome5 name="bars" size={24} color="white"/>
-                                </TouchableOpacity>
-                            </SafeAreaView>
-                        </View>  
+
 
                         <View style={styles.middle}>
                             <View style={styles.cardContainer}>
@@ -81,30 +60,35 @@ const Profile = () => {
                                         <FontAwesome5 name="camera" size={22} color="black" style={styles.camera}/>
                                     </TouchableOpacity>
 
-                                    <View style={styles.info}>
-                                    
-                                        <Text  style={styles.nom}><FontAwesome5 name="user" size={18} color="black"/>   samir ali</Text>
-                                        <Text ><FontAwesome5 name="envelope" size={18} color="black"/>   samir@gmail.com</Text>
-                                        <Text><FontAwesome5 name="phone" size={18} color="black"/>   25 214 214</Text>
-                                        
 
-                                    </View>
+                                          <View style={GlobalStyles.Cardename}>
+                                            <Text  style={styles.nom}>   samir ali</Text>
+                                            <Text ><FontAwesome5 name="envelope" size={18} color="black"/>   samir@gmail.com</Text>
+                                            <Text><FontAwesome5 name="phone" size={18} color="black"/>   25 214 214</Text>
+                                          </View>
+
+                                  <View>
+
+                                  <TouchableOpacity onPress={toggleBottomNavigationView} style={styles.button}>
+                                      {/*<Image source={parent} style={styles.img}/>*/}
+                                      <Image source={{uri: image==null?enf2:image}} style={styles.img}/>
+                                      <FontAwesome5 name="camera" size={22} color="black" style={styles.camera}/>
+                                  </TouchableOpacity>
+
+                                  <View style={styles.info}>
+
+                                      <Text  style={styles.nom}><FontAwesome5 name="user" size={18} color="black"/>   samir ali</Text>
+                                  </View>
+                                  </View>
                                    
                                 </View>
 
                             </View>
 
                         </View>  
-                        {/*Button*/}
-                         <View style={styles.buttonStyle}>
-                            <Button style={styles.buttonDesign} onPress={()=> navigation.navigate("Home")}>
-                                Modifier
-                            </Button>
-                        </View>
 
-                        <View style={styles.middle}>
-                            <Text style={styles.title}>Enfants</Text>
-                        </View>
+
+
                         <View style={styles.middle}>
                             <View style={styles.box}>
                                 <View style={styles.inner}>
@@ -126,12 +110,7 @@ const Profile = () => {
                             </View>
                            
                         </View>
-                         {/*Button*/}
-                         <View style={styles.buttonStyle}>
-                                <Button style={styles.buttonDesign} onPress={()=> navigation.navigate("#")}>
-                                    Modifier
-                                </Button>
-                         </View>
+
                         <View style={styles.middle}>
                             <View style={styles.box}>
                                 <View style={styles.inner}>
@@ -190,6 +169,7 @@ const Profile = () => {
              
                 </View>
             </ImageBackground>
+        </ScrollView>
 
        
     )
@@ -244,7 +224,7 @@ const styles = StyleSheet.create({
         margin:8,
         marginTop:15,
         backgroundColor:'#fff',
-        height:180,
+        height:350,
         borderRadius:5,
         shadowColor:'#000',
         shadowOffset: {width:2, height:4},
@@ -347,7 +327,7 @@ const styles = StyleSheet.create({
         shadowRadius: 17,
         borderRadius:-1,
         shadowOpacity: 0.5,
-        /*backgroundColor:'#fff'*/
+        backgroundColor:'#fff'
     },
     inner:{
         flex:1,

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity, SafeAreaView, TextInput} from 'react-native'
-import { Input, Icon, NativeBaseProvider, Button, InputRightAddon } from 'native-base'
+import {Input, Icon, NativeBaseProvider, Button, InputRightAddon, ScrollView} from 'native-base'
 import { FontAwesome5 } from '@expo/vector-icons'
 import bc from '../assets/bc.jpg'
 import { useNavigation } from '@react-navigation/native';
@@ -9,9 +9,10 @@ const ComplementInfo = () => {
     const navigation = useNavigation();
    const [name, setName] = useState('fddd')
     return(
+        <ScrollView>
             <ImageBackground source={bc} style={styles.container} >
                 <View>
-                        <View style={styles.header}>
+                        <View >
                             <TouchableOpacity 
                                 onPress={()=> navigation.navigate("Home")}>
                                 <FontAwesome5 name="arrow-left" color="white" size="sm"
@@ -153,6 +154,7 @@ const ComplementInfo = () => {
                         </View>
 
             </ImageBackground>
+        </ScrollView>
 
        
     )
@@ -206,6 +208,7 @@ const styles = StyleSheet.create({
         width: deviceWidth - 20,
         margin:8,
         marginTop:15,
+         marginBottom:15,
         backgroundColor:'#fff',
         height:200,
         borderRadius:5,

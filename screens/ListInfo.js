@@ -1,63 +1,70 @@
 import React from 'react'
-import { View, Text, StyleSheet, ImageBackground, Image, SafeAreaView, TouchableOpacity, Dimensions} from 'react-native'
+import {
+    View,
+    Text,
+    StyleSheet,
+    ImageBackground,
+    Image,
+    SafeAreaView,
+    TouchableOpacity,
+    Dimensions,
+    FlatList
+} from 'react-native'
 import { Input, Icon, NativeBaseProvider, Button, InputRightAddon } from 'native-base'
 import { FontAwesome5 } from '@expo/vector-icons'
 import bc from '../assets/bc.jpg';
 import { useNavigation } from '@react-navigation/native';
-import enf1 from '../assets/enf1.jpg'
+import enf1 from '../assets/enf1.jpg';
+import Header from './Header';
 import { Badge } from 'react-native-elements';
+import InformationDetailItems from "../components/InformationDetailItems";
+
+const informationDetailItems=[
+    {
+        title: 'uuuu', description:'gfuyfu fyg', appointment:'02/02/2022'
+    },
+    {
+        title: 'uuuu', description:'gfuyfu fyg', appointment:'02/02/2022'
+    }
+]
 const ListInfo = () => {
     const navigation = useNavigation();
 
     return(
         <ImageBackground source={bc} style={styles.container}>
-        <View >
-            <View style={styles.header}>
-                <TouchableOpacity 
-                   onPress={()=> navigation.navigate("Home")}>
-                   <FontAwesome5 name="arrow-left" color="white" size="sm"
-                    m={2}
-                      _light={{
-                         color:"black"
-                      }}
-                      _dark={{
-                          color:"gray.100.300"
-                        }}
-                                
-                                
-                    />
-                </TouchableOpacity>
-                <Text style={styles.HeaderText}>Informations</Text>
-                            
-                <SafeAreaView >
-                    <TouchableOpacity style={styles.bar}
-                        onPress={()=> navigation.navigate("#")}>
-                            <FontAwesome5 name="bars" size={24} color="white"/>
-                    </TouchableOpacity>
-                </SafeAreaView>
-            </View> 
+            <Header title={"Informations réçus"} pressHandler={() => navigation.navigate('Info')}/>
+
+            <View >
 
             <View style={styles.middle}>
                 <Text style={styles.text}>Liste des informations</Text>
-            </View> 
-            <View style={styles.middle}>
-                <TouchableOpacity onPress={()=> navigation.navigate("ListTask")}>
-                        <View style={styles.cardContainer}>
-                            
-                            <View style={styles.info}>
-                              
-                                <Text >Sujet : hffcg</Text>
-                                <Text >Détail :  : yhbj bujnk</Text>
-                                <Text style={styles.day}>Envoyé le :   <Badge value=" 26-04-2022" status="success" /> 
+            </View>
 
-                                </Text>
+            <FlatList
+                data={informationDetailItems}
+                renderItem={({item, index}) => (
+                    <InformationDetailItems item={item} index={index} key={index}/>
+                )}
+                keyExtractor={(item => item.id)}
+            />
+            {/*<View style={styles.middle}>*/}
+            {/*    <TouchableOpacity onPress={()=> navigation.navigate("ListTask")}>*/}
+            {/*            <View style={styles.cardContainer}>*/}
+            {/*                */}
+            {/*                <View style={styles.info}>*/}
+            {/*                  */}
+            {/*                    <Text >Sujet : hffcg</Text>*/}
+            {/*                    <Text >Détail :  : yhbj bujnk</Text>*/}
+            {/*                    <Text style={styles.day}>Envoyé le :   <Badge value=" 26-04-2022" status="success" /> */}
 
-                            </View>
+            {/*                    </Text>*/}
 
-                        </View>
-                </TouchableOpacity>
+            {/*                </View>*/}
 
-             </View>
+            {/*            </View>*/}
+            {/*    </TouchableOpacity>*/}
+
+            {/* </View>*/}
              
             
         </View>
@@ -113,7 +120,10 @@ const styles = StyleSheet.create({
          fontWeight:'550',
          fontSize:23,
          color:'#2D9C39',
-         marginTop:25
+         marginTop:25,
+         textDecorationLine: "underline",
+         textDecorationStyle: "solid",
+
      },
      cardContainer:{
         width: deviceWidth - 20,

@@ -1,66 +1,69 @@
 import React from 'react'
-import { View, Text, StyleSheet, ImageBackground, Image, SafeAreaView, TouchableOpacity, Dimensions} from 'react-native'
+import {
+    View,
+    Text,
+    StyleSheet,
+    ImageBackground,
+    Image,
+    SafeAreaView,
+    TouchableOpacity,
+    Dimensions,
+    FlatList
+} from 'react-native'
 import { Input, Icon, NativeBaseProvider, Button, InputRightAddon } from 'native-base'
 import { FontAwesome5 } from '@expo/vector-icons'
 import bc from '../assets/bc.jpg';
 import { useNavigation } from '@react-navigation/native';
 import enf1 from '../assets/enf1.jpg'
 import { Badge } from 'react-native-elements';
+import TaskDetailItems from "../components/TaskDetailItems";
+import Header from "./Header";
+const taskDetailItems=[
+    {
+        title: 'dee', description:'aysdfsfo', dateDepot:'02/02/2022', dateLimit:'.5/.2/2022'
+    }
+]
 const ListTask = () => {
     const navigation = useNavigation();
 
     return(
         <ImageBackground source={bc} style={styles.container}>
-        <View >
-            <View style={styles.header}>
-                <TouchableOpacity 
-                   onPress={()=> navigation.navigate("Task")}>
-                   <FontAwesome5 name="arrow-left" color="white" size="sm"
-                    m={2}
-                      _light={{
-                         color:"black"
-                      }}
-                      _dark={{
-                          color:"gray.100.300"
-                        }}
-                                
-                                
-                    />
-                </TouchableOpacity>
-                <Text style={styles.HeaderText}>Devoirs</Text>
-                            
-                <SafeAreaView >
-                    <TouchableOpacity style={styles.bar}
-                        onPress={()=> navigation.navigate("#")}>
-                            <FontAwesome5 name="bars" size={24} color="white"/>
-                    </TouchableOpacity>
-                </SafeAreaView>
-            </View> 
+            <Header title={"Travail à faire"}  pressHandler={() => navigation.navigate('Task')}/>
+
+            <View >
 
             <View style={styles.middle}>
                 <Text style={styles.text}>Liste des devoirs</Text>
-            </View> 
-            <View style={styles.middle}>
-                <TouchableOpacity onPress={()=> navigation.navigate("ListTask")}>
-                        <View style={styles.cardContainer}>
-                            
-                            <View style={styles.info}>
-                                <Text style={styles.date}>            
-                                     <Badge value="24-03-2022" status="success" /> 
-                                </Text>
-                                <Text >Sujet : hffcg</Text>
-                                <Text >Détail :  : yhbj bujnk</Text>
-                                <Text >Matière : gvbhjik</Text>
-                                <Text style={styles.day}>Demandé le :   <Badge value=" 15-05-2022" status="error" /> 
+            </View>
 
-                                </Text>
+            <FlatList
+                data={taskDetailItems}
+                renderItem={({item, index}) => (
+                    <TaskDetailItems item={item} index={index} key={index}/>
+                )}
+                keyExtractor={(item => item.id)}
+            />
+            {/*<View style={styles.middle}>*/}
+            {/*    <TouchableOpacity onPress={()=> navigation.navigate("ListTask")}>*/}
+            {/*            <View style={styles.cardContainer}>*/}
+            {/*                */}
+            {/*                <View style={styles.info}>*/}
+            {/*                    <Text style={styles.date}>            */}
+            {/*                         <Badge value="24-03-2022" status="success" /> */}
+            {/*                    </Text>*/}
+            {/*                    <Text >Sujet : hffcg</Text>*/}
+            {/*                    <Text >Détail :  : yhbj bujnk</Text>*/}
+            {/*                    <Text >Matière : gvbhjik</Text>*/}
+            {/*                    <Text style={styles.day}>Demandé le :   <Badge value=" 15-05-2022" status="error" /> */}
 
-                            </View>
+            {/*                    </Text>*/}
 
-                        </View>
-                </TouchableOpacity>
+            {/*                </View>*/}
 
-             </View>
+            {/*            </View>*/}
+            {/*    </TouchableOpacity>*/}
+
+            {/* </View>*/}
              
             
         </View>

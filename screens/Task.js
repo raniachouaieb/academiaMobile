@@ -1,66 +1,78 @@
 import React from 'react'
-import { View, Text, StyleSheet, ImageBackground, Image, SafeAreaView, TouchableOpacity, Dimensions} from 'react-native'
-import { Input, Icon, NativeBaseProvider, Button, InputRightAddon } from 'native-base'
+import {
+    View,
+    Text,
+    StyleSheet,
+    ImageBackground,
+    Image,
+    SafeAreaView,
+    TouchableOpacity,
+    Dimensions,
+    FlatList
+} from 'react-native'
+import {Input, Icon, NativeBaseProvider, Button, InputRightAddon, ScrollView} from 'native-base'
 import { FontAwesome5 } from '@expo/vector-icons'
 import bc from '../assets/bc.jpg';
 import { useNavigation } from '@react-navigation/native';
-import enf1 from '../assets/enf1.jpg'
 import { Badge } from 'react-native-elements';
+import Header from './Header';
+import StudentItem from "../components/Studenttems";
+import TaskStudentItem from "../components/TaskStudentItem";
+
+const tasks =[
+    {id:1,
+        first_name :' bruh',
+        last_name :'ayo', level :'1ere', classroom :'farchet', tasks_count:12, tasks_today:2
+
+    },
+    { id :2,
+        first_name :' bruh',
+        last_name :'ayo', level :'2eme', classroom :'farchet', tasks_count:12, tasks_today:2
+
+    },
+]
 const Task = () => {
     const navigation = useNavigation();
 
     return(
         <ImageBackground source={bc} style={styles.container}>
-        <View >
-            <View style={styles.header}>
-                <TouchableOpacity 
-                   onPress={()=> navigation.navigate("Home")}>
-                   <FontAwesome5 name="arrow-left" color="white" size="sm"
-                    m={2}
-                      _light={{
-                         color:"black"
-                      }}
-                      _dark={{
-                          color:"gray.100.300"
-                        }}
-                                
-                                
-                    />
-                </TouchableOpacity>
-                <Text style={styles.HeaderText}>Travai à faire</Text>
-                            
-                <SafeAreaView >
-                    <TouchableOpacity style={styles.bar}
-                        onPress={()=> navigation.navigate("#")}>
-                            <FontAwesome5 name="bars" size={24} color="white"/>
-                    </TouchableOpacity>
-                </SafeAreaView>
-            </View> 
+            <Header title={"Travail à faire"}  pressHandler={() => navigation.navigate('Home')}/>
+
+            <View >
+
 
             <View style={styles.middle}>
                 <Text style={styles.text}>Mon/ Mes enfant(s)</Text>
-            </View> 
+            </View>
+                <FlatList
+                    data={tasks}
+                    renderItem={({item, index}) => (
+                        <TaskStudentItem item={item} index={index}   pressHandler={() => navigation.navigate('ListTask')}/>
+                    )}
+
+                    keyExtractor={(item => item.id)}
+                />
            
-                <TouchableOpacity onPress={()=> navigation.navigate("ListTask")}>
-                    <View style={styles.cardContainer}>
+                {/*<TouchableOpacity onPress={()=> navigation.navigate("ListTask")}>*/}
+                {/*    <View style={styles.cardContainer}>*/}
 
-                            
-                                <Image source={enf1} style={styles.img}/>
-                                <View style={styles.info}>
-                                    <Text style={styles.nom} >salma chaouch</Text>
-                                    <Text > Niveau : 1ere année</Text>
-                                    <Text > Classe : Farachet</Text>
-                                    <Text style={styles.day}>Nombre travail à faire : 
-                                    <Badge value="125" status="success" /> 
-                                    </Text>
+                {/*            */}
+                {/*                <Image source={enf1} style={styles.img}/>*/}
+                {/*                <View style={styles.info}>*/}
+                {/*                    <Text style={styles.nom} >salma chaouch</Text>*/}
+                {/*                    <Text > Niveau : 1ere année</Text>*/}
+                {/*                    <Text > Classe : Farachet</Text>*/}
+                {/*                    <Text style={styles.day}>Nombre travail à faire : */}
+                {/*                    <Badge value="125" status="success" /> */}
+                {/*                    </Text>*/}
 
-                                </View>
-                          
+                {/*                </View>*/}
+                {/*          */}
 
-                    </View>
-                            
-            
-                </TouchableOpacity>
+                {/*    </View>*/}
+                {/*            */}
+
+                {/*</TouchableOpacity>*/}
 </View>
         </ImageBackground>
     )
@@ -90,9 +102,10 @@ const styles = StyleSheet.create({
     
    
     header:{
-        flex: 1,
-        width: 360,
-        height:20,
+
+        width: deviceWidth - 20,
+        height:15,
+        marginTop:25,
         padding:15,
        flexDirection:'row',
        justifyContent:'space-between',
@@ -113,7 +126,10 @@ const styles = StyleSheet.create({
          fontWeight:'550',
          fontSize:23,
          color:'#2D9C39',
-         marginTop:25
+         marginTop:25,
+         textDecorationLine: "underline",
+         textDecorationStyle: "solid",
+
      },
      cardContainer:{
         width: deviceWidth - 20,

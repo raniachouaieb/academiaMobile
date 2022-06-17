@@ -1,6 +1,8 @@
 import React from 'react'
-import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, SafeAreaView} from 'react-native'
-import { Input, Icon, NativeBaseProvider, Button } from 'native-base'
+import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, SafeAreaView, Pressable,FlatList} from 'react-native'
+import {Input, Icon, NativeBaseProvider, Button, ScrollView} from 'native-base'
+import data  from "./data";
+import HomeItems from "../components/HomeItems";
 import Header from './Header'
 import s2 from '../assets/s2.png'
 import bc from '../assets/bc.jpg'
@@ -17,71 +19,83 @@ const Home = () => {
     const navigation = useNavigation();
    
     return(
-        
+
         <ImageBackground source={bc} style={styles.body}>
 
             <View>
+                <FlatList
+                    data={data}
+                    style={{margin: 5}}
+                    columnWrapperStyle={styles.row}
+                    numColumns={2}
+                    renderItem={({item, index}) =>
+                        <TouchableOpacity  onPress={() => navigation.navigate(item.navigate)}>
+                            <HomeItems item={item} index={index}/>
+                        </TouchableOpacity>}
+                />
         
-            <Header label="Accueil"/>            
-                    <View style={styles.container}>
-                        <View style={styles.box}>
-                            <View style={styles.inner}>
-                            <TouchableOpacity onPress={()=> navigation.navigate("Task")}>
-                                <Image source={s2} style={styles.img}/>
-                                <Text style={styles.tache}>Travail à faire</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                        <View style={styles.box}>
-                            <View style={styles.inner}>
-                            <TouchableOpacity onPress={()=> navigation.navigate("Info")}>
-                            <Image source={s1} style={styles.img}/>
-                                <Text style={styles.tache}>Note d'info</Text>
-                                </TouchableOpacity>
 
-                            </View>
-                        </View>
-                        <View style={styles.box}>
-                            <View style={styles.inner}>
-                                <TouchableOpacity onPress={()=> navigation.navigate("Menuds")}>
-                                    <Image source={burger} style={styles.img}/>
-                                </TouchableOpacity>
-                                    <Text style={styles.tache}>Menu de la semaine</Text>
-                               
+                    {/*<View style={styles.container}>*/}
+                    {/*    <View style={styles.box}>*/}
+                    {/*        <View style={styles.inner}>*/}
+                    {/*        <TouchableOpacity onPress={()=> navigation.navigate("Task")}>*/}
+                    {/*            <Image source={s2} style={styles.img}/>*/}
+                    {/*            <Text style={styles.tache}>Travail à faire</Text>*/}
+                    {/*            </TouchableOpacity>*/}
+                    {/*        </View>*/}
+                    {/*    </View>*/}
+                    {/*    <View style={styles.box}>*/}
+                    {/*        <View style={styles.inner}>*/}
+                    {/*        <TouchableOpacity onPress={()=> navigation.navigate("Info")}>*/}
+                    {/*        <Image source={s1} style={styles.img}/>*/}
+                    {/*            <Text style={styles.tache}>Note d'info</Text>*/}
+                    {/*            </TouchableOpacity>*/}
 
-                            </View>
-                        </View>
-                        <View style={styles.box}>
-                            <View style={styles.inner}>
-                                <TouchableOpacity onPress={()=> navigation.navigate("Convocation")}>
-                                    <Image source={conv} style={styles.img}/>
-                                    <Text style={styles.tache}>Convocations</Text>
-                                </TouchableOpacity>
+                    {/*        </View>*/}
+                    {/*    </View>*/}
+                    {/*    <View style={styles.box}>*/}
+                    {/*        <View style={styles.inner}>*/}
+                    {/*            <TouchableOpacity onPress={()=> navigation.navigate("Menuds")}>*/}
+                    {/*                <Image source={burger} style={styles.img}/>*/}
+                    {/*            </TouchableOpacity>*/}
+                    {/*                <Text style={styles.tache}>Menu de la semaine</Text>*/}
+                    {/*           */}
 
-                            </View>
-                        </View>
-                        <View style={styles.box}>
-                            <View style={styles.inner}>
-                                <TouchableOpacity onPress={()=> navigation.navigate('Profile')}>
-                            <Image source={schedule} style={styles.img}/>
-                                <Text style={styles.tache}>Emploi</Text>
-                                </TouchableOpacity>
+                    {/*        </View>*/}
+                    {/*    </View>*/}
+                    {/*    <View style={styles.box}>*/}
+                    {/*        <View style={styles.inner}>*/}
+                    {/*            <TouchableOpacity onPress={()=> navigation.navigate("Convocation")}>*/}
+                    {/*                <Image source={conv} style={styles.img}/>*/}
+                    {/*                <Text style={styles.tache}>Convocations</Text>*/}
+                    {/*            </TouchableOpacity>*/}
 
-                            </View>
-                        </View>
-                        <View style={styles.box}>
-                            <View style={styles.inner}>
-                                <TouchableOpacity onPress={()=> navigation.navigate("Suggestion")}>
-                                    <Image source={comment} style={styles.img}/>
-                                    <Text style={styles.tache}>Suggestion</Text>
-                                </TouchableOpacity>
+                    {/*        </View>*/}
+                    {/*    </View>*/}
+                    {/*    <View style={styles.box}>*/}
+                    {/*        <View style={styles.inner}>*/}
+                    {/*            <TouchableOpacity onPress={()=> navigation.navigate('Profile')}>*/}
+                    {/*        <Image source={schedule} style={styles.img}/>*/}
+                    {/*            <Text style={styles.tache}>Emploi</Text>*/}
+                    {/*            </TouchableOpacity>*/}
 
-                            </View>
-                        </View>
-                    </View>
+                    {/*        </View>*/}
+                    {/*    </View>*/}
+                    {/*    <View style={styles.box}>*/}
+                    {/*        <View style={styles.inner}>*/}
+                    {/*            <TouchableOpacity onPress={()=> navigation.navigate("Suggestion")}>*/}
+                    {/*                <Image source={comment} style={styles.img}/>*/}
+                    {/*                <Text style={styles.tache}>Suggestion</Text>*/}
+                    {/*            </TouchableOpacity>*/}
+
+                    {/*        </View>*/}
+                    {/*    </View>*/}
+                    {/*</View>*/}
                 
             </View>
+
        </ImageBackground>
+
     )
 }
 
@@ -99,6 +113,10 @@ const styles = StyleSheet.create({
         flex:1,
         backgroundColor:'#fff',
 
+    },
+    row: {
+        flex: 1,
+        justifyContent: "space-around"
     },
     header:{
         flex: 1,

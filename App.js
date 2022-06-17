@@ -21,18 +21,70 @@ import MultiStepForm from "./screens/MultiStepForm";
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { StyleSheet, Text, View } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
+export default function App() {
+    return (
+        <NavigationContainer>
+            <Router />
+        </NavigationContainer>
+
+
+    );
+}
+
 function DrawerRoutes() {
     return (
 
-        <Drawer.Navigator drawerContent={props =><CustomDrawer {...props} />} initialRouteName="Home" screenOptions={{headerShown: true}}>
-            <Drawer.Screen name="Home" component={Home} />
-            <Drawer.Screen name="Profile" component={Profile} />
-            <Drawer.Screen name="ComplementInfo" component={ComplementInfo}/>
-            <Drawer.Screen name="Contact" component={Contact}/>
+        <Drawer.Navigator drawerContent={props =><CustomDrawer {...props} />} initialRouteName="Home" screenOptions={{headerShown: true, drawerStyle: {
+                    backgroundColor: '#fff'},}}>
+            <Drawer.Screen name="Home" component={Home}
+                           options={{
+
+                               headerStyle: {
+                                   backgroundColor: '#17a2b8',
+                               },
+                               headerTintColor: '#fff',
+                               headerTitleStyle: {
+                                   fontWeight: 'bold',
+                               },
+                           }}/>
+            <Drawer.Screen name="Profile" component={Profile}
+                           options={{
+
+                               headerStyle: {
+                                   backgroundColor: '#17a2b8',
+                               },
+                               headerTintColor: '#fff',
+                               headerTitleStyle: {
+                                   fontWeight: 'bold',
+                               },
+                           }}/>
+            <Drawer.Screen name="ComplementInfo" component={ComplementInfo}
+                           options={{
+
+                               headerStyle: {
+                                   backgroundColor: '#17a2b8',
+                               },
+                               headerTintColor: '#fff',
+                               headerTitleStyle: {
+                                   fontWeight: 'bold',
+                               },
+                           }}/>
+            <Drawer.Screen name="Contact" component={Contact}
+                           options={{
+
+                               headerStyle: {
+                                   backgroundColor: '#17a2b8',
+                               },
+                               headerTintColor: '#fff',
+                               headerTitleStyle: {
+                                   fontWeight: 'bold',
+                               },
+                           }}/>
 
 
         </Drawer.Navigator>
@@ -40,20 +92,24 @@ function DrawerRoutes() {
     );
 }
 
-function App(){
+function Router(){
     return(
         <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen name="Started" component={Started}/>
             <Stack.Screen name="Login" component={Login}/>
             <Stack.Screen name="Register" component={Register}/>
-            <Stack.Screen name="Home" component={DrawerRoutes}/>
+            <Stack.Screen name="Home"   options={{
+                title: 'My home',}} component={DrawerRoutes}/>
             <Stack.Screen name="Header" component={Header}/>
             <Stack.Screen name="Suggestion" component={Suggestion}/>
             <Stack.Screen name="Menuds" component={Menuds}/>
             <Stack.Screen name="Task" component={Task}/>
             <Stack.Screen name="Info" component={Info}/>
-            <Stack.Screen name="Convocation" component={Convocation}/>
-            <Stack.Screen name="ListTask" component={ListTask}/>
+            <Stack.Screen name="Convocation" options={{
+                title: 'Mes enfants',}}component={Convocation}/>
+            <Stack.Screen name="ListTask"
+                          options={{
+                              title: 'Convocations',}}component={ListTask}/>
             <Stack.Screen name="ListInfo" component={ListInfo}/>
             <Stack.Screen name="ListConv" component={ListConv}/>
             <Stack.Screen name="ForgotPass" component={ForgotPass}/>
@@ -72,11 +128,4 @@ function App(){
     );
 }
 
-export default () => {
-    return (
-        <NavigationContainer>
-            <App />
-        </NavigationContainer>
 
-    )
-}

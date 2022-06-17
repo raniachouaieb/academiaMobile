@@ -4,6 +4,11 @@ import bc from '../assets/bc.jpg'
 import { FontAwesome5 } from '@expo/vector-icons'
 import spaghetti from '../assets/spaghetti.jpg'
 import { useNavigation } from '@react-navigation/native';
+import Header from "./Header";
+import GlobalStyles from "../assets/GlobalStyles";
+import moment from "moment";
+import Sm from "../components/Sm";
+import {ScrollView} from "native-base";
 
 
 const Menuds = () => {
@@ -11,40 +16,19 @@ const Menuds = () => {
 
     return(
         <ImageBackground source={bc} style={styles.body}>
+            <Header title={"Menu de la semaine"} pressHandler={() => navigation.navigate('Home')}/>
 
             <View >
-        
-                    <View style={styles.header}>
-                    <TouchableOpacity 
-                                onPress={()=> navigation.navigate("Home")}>
-                                <FontAwesome5 name="arrow-left" color="white" size="sm"
-                                m={2}
-                                _light={{
-                                    color:"black"
-                                }}
-                                _dark={{
-                                    color:"gray.100.300"
-                                }}
-                                
-                                
-                                />
-                         </TouchableOpacity>
-                        <Text style={styles.text}>Menu de la semaine</Text>
-                        
-                        <SafeAreaView >
-                            <TouchableOpacity style={styles.bar}
-                            onPress={()=> navigation.navigate("#")}>
-                                <FontAwesome5 name="bars" size={24} color="white"/>
-                            </TouchableOpacity>
-                         </SafeAreaView>
-                    </View>
+
                     <View style={styles.middle}>
                         <View style={styles.cardContainer}>
-                        <Text style={styles.day}>Lundi 02/05/2022</Text>
                             <Image style={styles.img} source={spaghetti}/>
+                            <Text style={styles.day}>Lundi </Text>
+
                             <Text style={styles.menu}>Entrée : Soupe</Text>
                             <Text style={styles.menu}>Plat principal : Spaghetti</Text>
                             <Text style={styles.menu}>Dessert : Pomme</Text>
+                            <Sm style={[GlobalStyles.CardHeaderLeftBottom, GlobalStyles.Infor]}> 02/05/2022 </Sm>
 
                         </View>
 
@@ -52,15 +36,18 @@ const Menuds = () => {
                     <View style={styles.middle}>
                         <View style={styles.cardContainer}>
                             <Image style={styles.img} source={spaghetti}/>
-                            <Text style={styles.day}>Lundi 02/05/2022</Text>
+                            <Text style={styles.day}>Mardi</Text>
                             <Text style={styles.menu}>Entrée : Soupe</Text>
                             <Text style={styles.menu}>Plat principal : Spaghetti</Text>
                             <Text style={styles.menu}>Dessert : Pomme</Text>
+                            <Sm style={[GlobalStyles.CardHeaderLeftBottom, GlobalStyles.Infor]}> 02/05/2022 </Sm>
+
 
                         </View>
 
                     </View>
-                    
+
+
         
             </View>
     </ImageBackground>
@@ -120,20 +107,24 @@ const styles = StyleSheet.create({
         
     },
     img:{
+        width: deviceWidth - 20,
         height:190,
-        borderTopLeftRadius:20,
-        borderTopRightRadius:20, 
-        opacity: 0.9
+        borderTopLeftRadius:15,
+        borderTopRightRadius:15,
+        opacity: 0.9,
+
+
     },
     day:{
         fontSize:20,
         fontWeight:'560',
-        textAlign:'center'
+        left:5
     },
     menu:{
         fontWeight:'200',
         fontSize:18,
-        textAlign:'center'
+        left:5
+
 
     },
 })

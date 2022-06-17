@@ -1,64 +1,98 @@
-import React from 'react'
-import { View, Text, StyleSheet, ImageBackground, Image, SafeAreaView, TouchableOpacity, Dimensions} from 'react-native'
+import React, {useEffect, useState} from 'react'
+import {
+    View,
+    Text,
+    StyleSheet,
+    ImageBackground,
+    Image,
+    SafeAreaView,
+    TouchableOpacity,
+    Dimensions,
+    FlatList
+} from 'react-native'
 import { Input, Icon, NativeBaseProvider, Button, InputRightAddon } from 'native-base'
 import { FontAwesome5 } from '@expo/vector-icons'
 import bc from '../assets/bc.jpg';
 import { useNavigation } from '@react-navigation/native';
 import enf1 from '../assets/enf1.jpg'
 import { Badge } from 'react-native-elements';
+import StudentItem from '../components/Studenttems';
+import data from "./data";
+import Header from "./Header"
+import HomeItems from "../components/HomeItems";
+
 const Convocation = () => {
     const navigation = useNavigation();
+    const [data, setData] = useState([]);
+    const [isLoading, setLoading] = useState(true);
 
+    const URI = 'http://192.168.43.34:8000';
+
+    useEffect( () => {
+        const asyncFetchDailyData = async () => {
+          //  const v = await AsyncStorage.getItem('token');
+            //console.log(v);
+            fetch(URI + '/api/convocation/convocation',{
+                method:'get',
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type':'application/json',
+                    // 'Authorization' : 'Bearer '+v,
+                    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjQzLjM0OjgwMDBcL2FwaVwvYXV0aFwvbG9naW4iLCJpYXQiOjE2NTU0ODQyMjIsImV4cCI6MTY1NTQ4NzgyMiwibmJmIjoxNjU1NDg0MjIyLCJqdGkiOiJPVmlORERDTWk0TE13dzE2Iiwic3ViIjoxMTEsInBydiI6ImZjNzY4MjRmYWUzMmNiZWEyMmJmZmFkZTNiNTUyMDAwOGYzNzA4NzIifQ.I24_tmYktyWZZcL_8cAMPK2DT98r3asEDwhxsGsNd9k',
+
+                },
+
+
+            })
+                .then((response) => response.json())
+                .then((json) => {
+                    console.log("--------------json-------------", json.data)
+                    setData(json.data)
+                })
+                .catch((error) => console.error(error))
+                .finally(() => setLoading(false));
+        }
+
+        asyncFetchDailyData();
+    }, []);
     return(
         <ImageBackground source={bc} style={styles.container}>
-        <View >
-            <View style={styles.header}>
-                <TouchableOpacity 
-                   onPress={()=> navigation.navigate("Home")}>
-                   <FontAwesome5 name="arrow-left" color="white" size="sm"
-                    m={2}
-                      _light={{
-                         color:"black"
-                      }}
-                      _dark={{
-                          color:"gray.100.300"
-                        }}
-                                
-                                
-                    />
-                </TouchableOpacity>
-                <Text style={styles.HeaderText}>Convocations</Text>
-                            
-                <SafeAreaView >
-                    <TouchableOpacity style={styles.bar}
-                        onPress={()=> navigation.navigate("#")}>
-                            <FontAwesome5 name="bars" size={24} color="white"/>
-                    </TouchableOpacity>
-                </SafeAreaView>
-            </View> 
+            <Header title={'Convocations'} pressHandler={() => navigation.navigate('Home')}/>
 
+        <View >
             <View style={styles.middle}>
                 <Text style={styles.text}>Mon/ Mes enfant(s)</Text>
-            </View> 
-            <View style={styles.middle}>
-                    <TouchableOpacity onPress={()=> navigation.navigate('ListConv')}>
-                        <View style={styles.cardContainer}>
-                            
-                            <Image source={enf1} style={styles.img}/>
-                            <View style={styles.info}>
-                            <Text style={styles.nom} >salma chaouch</Text>
-                            <Text > Niveau : 1ere année</Text>
-                            <Text > Classe : Farachet</Text>
-                            <Text style={styles.day}>Total Convocation: 
-                            <Badge value="2" status="success" /> 
-                            </Text>
-
-                            </View>
-
-                        </View>
-                    </TouchableOpacity>
-
             </View>
+            <FlatList
+                data={data}
+                renderItem={({item, index}) => (
+                    <StudentItem item={item} index={index}   pressHandler={() => navigation.navigate('ListConv',{item : item.id})
+                    }/>
+
+                )}
+
+                keyExtractor={(item => item.id)}
+            />
+
+            {/*<View style={styles.middle}>*/}
+            {/*        <TouchableOpacity onPress={()=> navigation.navigate('ListConv')}>*/}
+            {/*            <View style={styles.cardContainer}>*/}
+            {/*                */}
+            {/*                <Image source={enf1} style={styles.img}/>*/}
+            {/*                <View style={styles.info}>*/}
+            {/*                <Text style={styles.nom} >salma chaouch</Text>*/}
+            {/*                <Text > Niveau : 1ere année</Text>*/}
+            {/*                <Text > Classe : Farachet</Text>*/}
+            {/*                <Text style={styles.day}>Total Convocation: */}
+            {/*                <Badge value="2" status="success" /> */}
+            {/*                </Text>*/}
+
+            {/*                </View>*/}
+
+            {/*            </View>*/}
+            {/*        </TouchableOpacity>*/}
+
+            {/*</View>*/}
              
             
         </View>
