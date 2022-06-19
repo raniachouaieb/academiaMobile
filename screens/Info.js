@@ -1,4 +1,4 @@
-import React from 'react'
+import React , {useEffect, useState}from 'react'
 import {
     View,
     Text,
@@ -18,20 +18,40 @@ import { Badge } from 'react-native-elements';
 import Header from './Header';
 import StudnetInfoItem from "../components/StudnetInfoItems";
 
-const informations =[
-    {id:1,
-        first_name :' bruh',
-        last_name :'ayo', level :'1ere', classroom :'farchet', informations_count:5, informations_today:1
 
-    },
-    { id :2,
-        first_name :' bruh',
-        last_name :'ayo', level :'2eme', classroom :'farchet', informations_count:10, informations_today:0
-
-    },
-]
 const Info = () => {
     const navigation = useNavigation();
+    const [data, setData] = useState([]);
+    const [isLoading, setLoading] = useState(true);
+    const URI = 'http://192.168.1.21:8000';
+
+    useEffect( () => {
+        const asyncFetchDailyData = async () => {
+            //  const v = await AsyncStorage.getItem('token');
+            //console.log(v);
+            fetch(URI + '/api/info/info',{
+                method:'get',
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type':'application/json',
+                    // 'Authorization' : 'Bearer '+v,
+                    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMjE6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTY0MTY1NywiZXhwIjoxNjU1NjQ1MjU3LCJuYmYiOjE2NTU2NDE2NTcsImp0aSI6ImJqSUtpNG9jOG5oN2FpMEQiLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.lFJcTPZBmwH4Z3blZIS7aLNcW2QYzZV2VYUUEkM9nic',
+
+                },
+
+
+            })
+                .then((response) => response.json())
+                .then((json) => {
+                    console.log("--------------json-------------", json.data)
+                    setData(json.data)
+                })
+                .catch((error) => console.error(error))
+                .finally(() => setLoading(false));
+        }
+
+        asyncFetchDailyData();
+    }, []);
 
     return(
         <ImageBackground source={bc} style={styles.container}>
@@ -43,7 +63,7 @@ const Info = () => {
                 <Text style={styles.text}>Mon/ Mes enfant(s)</Text>
             </View>
             <FlatList
-                data={informations}
+                data={data}
                 renderItem={({item, index}) => (
                     <StudnetInfoItem item={item} index={index}   pressHandler={() => navigation.navigate('ListInfo')}/>
                 )}

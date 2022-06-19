@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import {
     View,
     Text,
@@ -19,20 +19,40 @@ import Header from './Header';
 import StudentItem from "../components/Studenttems";
 import TaskStudentItem from "../components/TaskStudentItem";
 
-const tasks =[
-    {id:1,
-        first_name :' bruh',
-        last_name :'ayo', level :'1ere', classroom :'farchet', tasks_count:12, tasks_today:2
-
-    },
-    { id :2,
-        first_name :' bruh',
-        last_name :'ayo', level :'2eme', classroom :'farchet', tasks_count:12, tasks_today:2
-
-    },
-]
 const Task = () => {
     const navigation = useNavigation();
+    const [data, setData] = useState([]);
+    const [isLoading, setLoading] = useState(true);
+
+    const URI = 'http://192.168.1.21:8000';
+
+    useEffect( () => {
+        const asyncFetchDailyData = async () => {
+            //  const v = await AsyncStorage.getItem('token');
+            //console.log(v);
+            fetch(URI + '/api/task/listEnf',{
+                method:'get',
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type':'application/json',
+                    // 'Authorization' : 'Bearer '+v,
+                    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMjE6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTY0NTA2OCwiZXhwIjoxNjU1NjQ4NjY4LCJuYmYiOjE2NTU2NDUwNjgsImp0aSI6Iks1MW83YTRBQ3hHTVdKYlMiLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.5yTKJYY4Jq5KvbPszjuKVS4_ancP5FOUQEpckXmJHGw',
+
+                },
+
+
+            })
+                .then((response) => response.json())
+                .then((json) => {
+                    console.log("--------------json-------------", json.data)
+                    setData(json.data)
+                })
+                .catch((error) => console.error(error))
+                .finally(() => setLoading(false));
+        }
+
+        asyncFetchDailyData();
+    }, []);
 
     return(
         <ImageBackground source={bc} style={styles.container}>
@@ -45,7 +65,7 @@ const Task = () => {
                 <Text style={styles.text}>Mon/ Mes enfant(s)</Text>
             </View>
                 <FlatList
-                    data={tasks}
+                    data={data}
                     renderItem={({item, index}) => (
                         <TaskStudentItem item={item} index={index}   pressHandler={() => navigation.navigate('ListTask')}/>
                     )}

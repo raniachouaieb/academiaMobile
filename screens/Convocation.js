@@ -26,7 +26,7 @@ const Convocation = () => {
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
-    const URI = 'http://192.168.43.34:8000';
+    const URI = 'http://192.168.1.21:8000';
 
     useEffect( () => {
         const asyncFetchDailyData = async () => {
@@ -38,7 +38,7 @@ const Convocation = () => {
                     'Accept':'application/json',
                     'Content-Type':'application/json',
                     // 'Authorization' : 'Bearer '+v,
-                    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjQzLjM0OjgwMDBcL2FwaVwvYXV0aFwvbG9naW4iLCJpYXQiOjE2NTU0ODQyMjIsImV4cCI6MTY1NTQ4NzgyMiwibmJmIjoxNjU1NDg0MjIyLCJqdGkiOiJPVmlORERDTWk0TE13dzE2Iiwic3ViIjoxMTEsInBydiI6ImZjNzY4MjRmYWUzMmNiZWEyMmJmZmFkZTNiNTUyMDAwOGYzNzA4NzIifQ.I24_tmYktyWZZcL_8cAMPK2DT98r3asEDwhxsGsNd9k',
+                    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMjE6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTYzODcyNiwiZXhwIjoxNjU1NjQyMzI2LCJuYmYiOjE2NTU2Mzg3MjYsImp0aSI6Ikx2emxMTElBZmZXbVJFY0oiLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.mrtx2Ux6ZeJW5djSn4NQ6vINDy0m10Nq57lUnnQ5_iY',
 
                 },
 

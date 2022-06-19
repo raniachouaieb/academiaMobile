@@ -24,15 +24,15 @@ function stripTime(date){
 class InformationDetailItems extends React.Component {
 
     render() {
-        const {title, description, appointment} = this.props.item;
+        const {titre, info, appointment} = this.props.item;
 
         return (
             <TouchableNativeFeedback onPress={this.props.pressHandler}>
                 <View style={[GlobalStyles.Card]}>
                     <CardContent>
                         <View >
-                            <H4  style={{color: isTodayOrFuture(appointment)?'#598df8': ''}}>{title}</H4>
-                            <Sm   style={{color: isTodayOrFuture(appointment)?'#598df8':''}}> {description} </Sm>
+                            <H4  style={{color: isTodayOrFuture(appointment)?'#598df8': ''}}>{titre}</H4>
+                            <Sm   style={{color: isTodayOrFuture(appointment)?'#598df8':''}}> {info} </Sm>
                         </View>
                     </CardContent>
                     <Sm style={GlobalStyles.dateLeft}> Envoyé le :{moment(appointment).format("DD/MM/YYYY à HH:mm")} </Sm>

@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         header:{
             flex: 1,
             width: 375,
-            height:20,
+            height:37,
             padding:15,
             alignItems:'center',
           flexDirection:'row',

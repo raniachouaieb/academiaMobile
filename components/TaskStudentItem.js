@@ -16,7 +16,7 @@ class TaskStudentItem extends React.Component {
     }
 
     render() {
-        const { first_name, last_name, level, classroom, tasks_count, tasks_today } = this.props.item
+        const { nomEleve, prenomEleve, level, classroom, tasks_count, tasks_today } = this.props.item
         return (
             <TouchableNativeFeedback onPress={this.props.pressHandler } style={{overflow:'visible'}}>
                 <View style={GlobalStyles.cardprofilestyle}>
@@ -29,10 +29,10 @@ class TaskStudentItem extends React.Component {
                                    source={require('../assets/circled-user-male-skin.png')} />
                         </View>
                         <View style={GlobalStyles.Cardename}>
-                            <Text style={GlobalStyles.Title}>{first_name} {last_name}</Text>
-                            <Text style={GlobalStyles.SubTitle}> Niveau scolaire : {level}</Text>
-                            {classroom != null ?
-                                <Text style={GlobalStyles.SubTitle}>Classe : {classroom}</Text>
+                            <Text style={GlobalStyles.Title}>{nomEleve} {prenomEleve}</Text>
+                            <Text style={GlobalStyles.SubTitle}> Niveau scolaire : {this.props.item.class.level.level}</Text>
+                            {this.props.item.class != null ?
+                                <Text style={GlobalStyles.SubTitle}>Classe : {this.props.item.class.name}</Text>
                                 : null}
 
 
