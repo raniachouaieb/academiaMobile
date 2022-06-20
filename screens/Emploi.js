@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {
     View,
     Text,
@@ -10,16 +10,20 @@ import {
     Dimensions,
     FlatList
 } from 'react-native'
-import {Input, Icon, NativeBaseProvider, Button, InputRightAddon, ScrollView} from 'native-base'
+import { Input, Icon, NativeBaseProvider, Button, InputRightAddon } from 'native-base'
 import { FontAwesome5 } from '@expo/vector-icons'
 import bc from '../assets/bc.jpg';
 import { useNavigation } from '@react-navigation/native';
+import enf1 from '../assets/enf1.jpg'
 import { Badge } from 'react-native-elements';
-import Header from './Header';
-import StudentItem from "../components/Studenttems";
-import TaskStudentItem from "../components/TaskStudentItem";
+import StudentItem from '../components/Studenttems';
+import data from "./data";
+import Header from "./Header"
+import HomeItems from "../components/HomeItems";
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import StudentEmpItem from "../components/StudentEmpItem";
 
-const Task = () => {
+const Emploi = () => {
     const navigation = useNavigation();
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
@@ -28,15 +32,15 @@ const Task = () => {
 
     useEffect( () => {
         const asyncFetchDailyData = async () => {
-            //  const v = await AsyncStorage.getItem('token');
+            //const v = await AsyncStorage.getItem('token');
             //console.log(v);
-            fetch(URI + '/api/task/listEnf',{
+            fetch(URI + '/api/emploi/getEnfant',{
                 method:'get',
                 headers:{
                     'Accept':'application/json',
                     'Content-Type':'application/json',
-                    // 'Authorization' : 'Bearer '+v,
-                    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjQzLjM1OjgwMDBcL2FwaVwvYXV0aFwvbG9naW4iLCJpYXQiOjE2NTU3MjAzNTEsImV4cCI6MTY1NTcyMzk1MSwibmJmIjoxNjU1NzIwMzUxLCJqdGkiOiJJa1FESkpJOU1KWXJhQXpuIiwic3ViIjoxMTEsInBydiI6ImZjNzY4MjRmYWUzMmNiZWEyMmJmZmFkZTNiNTUyMDAwOGYzNzA4NzIifQ.U3tEMH9OQHhzXuE_Hu2LuCRRdnZZiPo8N14VNovPJbg',
+                    //'Authorization' : 'Bearer '+v,
+                    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMTU6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTc0MDMyOCwiZXhwIjoxNjU1NzQzOTI4LCJuYmYiOjE2NTU3NDAzMjgsImp0aSI6ImQxdkc0SUpXSmhBNUg3ZVgiLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.0XT1IPEWLXNNsgwGo67RewWpyWXo7m7jxOn7Fbkw0lo',
 
                 },
 
@@ -53,47 +57,48 @@ const Task = () => {
 
         asyncFetchDailyData();
     }, []);
-
     return(
         <ImageBackground source={bc} style={styles.container}>
-            <Header title={"Travail à faire"}  pressHandler={() => navigation.navigate('Home')}/>
+            <Header title={'Emploi du temps'} pressHandler={() => navigation.navigate('Home')}/>
 
             <View >
-
-
-            <View style={styles.middle}>
-                <Text style={styles.text}>Mon/ Mes enfant(s)</Text>
-            </View>
+                <View style={styles.middle}>
+                    <Text style={styles.text}>Mon/ Mes enfant(s)</Text>
+                </View>
                 <FlatList
                     data={data}
                     renderItem={({item, index}) => (
-                        <TaskStudentItem item={item} index={index}   pressHandler={() => navigation.navigate('ListTask')}/>
+                        <StudentEmpItem item={item} index={index}   pressHandler={() => navigation.navigate('EmpByClass',{item : item.id})
+                        }/>
+
                     )}
 
                     keyExtractor={(item => item.id)}
                 />
-           
-                {/*<TouchableOpacity onPress={()=> navigation.navigate("ListTask")}>*/}
-                {/*    <View style={styles.cardContainer}>*/}
 
-                {/*            */}
+                {/*<View style={styles.middle}>*/}
+                {/*        <TouchableOpacity onPress={()=> navigation.navigate('ListConv')}>*/}
+                {/*            <View style={styles.cardContainer}>*/}
+                {/*                */}
                 {/*                <Image source={enf1} style={styles.img}/>*/}
                 {/*                <View style={styles.info}>*/}
-                {/*                    <Text style={styles.nom} >salma chaouch</Text>*/}
-                {/*                    <Text > Niveau : 1ere année</Text>*/}
-                {/*                    <Text > Classe : Farachet</Text>*/}
-                {/*                    <Text style={styles.day}>Nombre travail à faire : */}
-                {/*                    <Badge value="125" status="success" /> */}
-                {/*                    </Text>*/}
+                {/*                <Text style={styles.nom} >salma chaouch</Text>*/}
+                {/*                <Text > Niveau : 1ere année</Text>*/}
+                {/*                <Text > Classe : Farachet</Text>*/}
+                {/*                <Text style={styles.day}>Total Convocation: */}
+                {/*                <Badge value="2" status="success" /> */}
+                {/*                </Text>*/}
 
                 {/*                </View>*/}
-                {/*          */}
 
-                {/*    </View>*/}
-                {/*            */}
+                {/*            </View>*/}
+                {/*        </TouchableOpacity>*/}
 
-                {/*</TouchableOpacity>*/}
-</View>
+                {/*</View>*/}
+
+
+            </View>
+
         </ImageBackground>
     )
 }
@@ -101,7 +106,7 @@ const Task = () => {
 export default ()=>{
     return (
         <NativeBaseProvider>
-            <Task/>
+            <Emploi/>
         </NativeBaseProvider>
 
     )
@@ -112,24 +117,23 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor:'#fff',
-        
+
     },
-   
+
     middle:{
         alignItems:'center',
         justifyContent:'center',
     },
-    
-   
-    header:{
 
-        width: deviceWidth - 20,
-        height:15,
-        marginTop:25,
+
+    header:{
+        flex: 1,
+        width: 360,
+        height:20,
         padding:15,
-       flexDirection:'row',
-       justifyContent:'space-between',
-       backgroundColor: '#17a2b8',
+        flexDirection:'row',
+        justifyContent:'space-between',
+        backgroundColor: '#17a2b8',
     },
     bar:{
         alignItems:'flex-end',
@@ -141,17 +145,14 @@ const styles = StyleSheet.create({
         color:'#fff',
         fontWeight:'700',
         textAlign:'center',
-     },
-     text:{
-         fontWeight:'550',
-         fontSize:23,
-         color:'#2D9C39',
-         marginTop:25,
-         textDecorationLine: "underline",
-         textDecorationStyle: "solid",
-
-     },
-     cardContainer:{
+    },
+    text:{
+        fontWeight:'550',
+        fontSize:23,
+        color:'#2D9C39',
+        marginTop:25
+    },
+    cardContainer:{
         width: deviceWidth - 20,
         margin:8,
         marginTop:15,
@@ -176,14 +177,14 @@ const styles = StyleSheet.create({
     },
     info:{
         flexWrap:'wrap',
-       justifyContent:'center'
+        justifyContent:"center",
     },
     nom:{
         fontSize:15,
         fontWeight:'650'
     }
 
-   
-    
+
+
 
 })

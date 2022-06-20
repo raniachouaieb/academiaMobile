@@ -33,7 +33,7 @@ let data = [
     {
         key: 6,
         title: 'Emploi du temps',
-        navigate: 'Home',
+        navigate: 'Emploi',
         'image': require('../assets/emploi.png'),
     }
 ];

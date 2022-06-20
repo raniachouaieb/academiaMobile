@@ -20,25 +20,26 @@ import StudentItem from '../components/Studenttems';
 import data from "./data";
 import Header from "./Header"
 import HomeItems from "../components/HomeItems";
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Convocation = () => {
     const navigation = useNavigation();
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
-    const URI = 'http://192.168.1.21:8000';
+    const URI = 'http://192.168.1.15:8000';
 
     useEffect( () => {
         const asyncFetchDailyData = async () => {
-          //  const v = await AsyncStorage.getItem('token');
+            //const v = await AsyncStorage.getItem('token');
             //console.log(v);
             fetch(URI + '/api/convocation/convocation',{
                 method:'get',
                 headers:{
                     'Accept':'application/json',
                     'Content-Type':'application/json',
-                    // 'Authorization' : 'Bearer '+v,
-                    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMjE6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTYzODcyNiwiZXhwIjoxNjU1NjQyMzI2LCJuYmYiOjE2NTU2Mzg3MjYsImp0aSI6Ikx2emxMTElBZmZXbVJFY0oiLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.mrtx2Ux6ZeJW5djSn4NQ6vINDy0m10Nq57lUnnQ5_iY',
+                     //'Authorization' : 'Bearer '+v,
+                    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMTU6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTc0NDc3NCwiZXhwIjoxNjU1NzQ4Mzc0LCJuYmYiOjE2NTU3NDQ3NzQsImp0aSI6IkZuN1J5UGZvTzU1aVNDaHciLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.fIQfjeUJ59EOqVpJYEr6iPjhAay0zvBtOvZpinpnGHY',
 
                 },
 
@@ -66,7 +67,7 @@ const Convocation = () => {
             <FlatList
                 data={data}
                 renderItem={({item, index}) => (
-                    <StudentItem item={item} index={index}   pressHandler={() => navigation.navigate('ListConv',{item : item.id})
+                    <StudentItem item={item} index={index}   pressHandler={() => navigation.navigate('ListConv',{id: item.id})
                     }/>
 
                 )}

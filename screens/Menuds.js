@@ -27,7 +27,7 @@ const Menuds = () => {
     const navigation = useNavigation();
     const [data, setData] = useState();
     const [isLoading, setLoading] = useState(true);
-    const URI = 'http://192.168.1.21:8000';
+    const URI = 'http://192.168.1.15:8000';
     useEffect( () => {
         const asyncFetchDailyData = async () => {
             //  const v = await AsyncStorage.getItem('token');
@@ -38,7 +38,7 @@ const Menuds = () => {
                     'Accept':'application/json',
                     'Content-Type':'application/json',
                     // 'Authorization' : 'Bearer '+v,
-                    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMjE6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTYzNjQzNSwiZXhwIjoxNjU1NjQwMDM1LCJuYmYiOjE2NTU2MzY0MzUsImp0aSI6IkJmY2pRVlB3ZTY2MFl5azUiLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.TpUZsZgfisum7dyv2CMdlR3hks43xi0RbNCS05zag1E',
+                    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMTU6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTczNTM2MCwiZXhwIjoxNjU1NzM4OTYwLCJuYmYiOjE2NTU3MzUzNjAsImp0aSI6IjdHU0c2NXY1aUN5R3F2Tk0iLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.SFzTzTtEdNLfZH8HKoe2RetkAlknPPFLICPaYW0HQLw',
                 },
             })
                 .then((response) => response.json())
@@ -67,7 +67,7 @@ const Menuds = () => {
 
                     <View style={styles.middle}>
                         <View style={styles.cardContainer}>
-                           <Image style={styles.img} source={{ uri: 'http://192.168.1.21:8000/'+item.image }}/>
+                           <Image style={styles.img} source={{ uri: 'http://192.168.1.15:8080/assets/'+item.image }}/>
                             <Text style={styles.day}>{item.jour} </Text>
                             <HTMLView  style={styles.menu}  value={item.menu}/>
                     {/*        <Text style={styles.menu}>Plat principal : Spaghetti</Text>*/}

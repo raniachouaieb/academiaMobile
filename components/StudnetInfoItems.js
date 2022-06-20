@@ -16,7 +16,7 @@ class StudnetInfoItem extends React.Component {
     }
 
     render() {
-        const { nomEleve, prenomEleve, informations_count, informations_today } = this.props.item
+        const { nomEleve, prenomEleve, image,informations_count, informations_today } = this.props.item
         return (
             <TouchableNativeFeedback onPress={this.props.pressHandler } style={{overflow:'visible'}}>
                 <View style={GlobalStyles.cardprofilestyle}>
@@ -26,7 +26,7 @@ class StudnetInfoItem extends React.Component {
                     }}>
                         <View style={GlobalStyles.veiwimagestyle}>
                             <Image style={GlobalStyles.ImageStyle}
-                                   source={require('../assets/circled-user-male-skin.png')} />
+                                   source={{ uri: 'http://192.168.43.35:8000/assets/'+image }} />
                         </View>
                         <View style={GlobalStyles.Cardename}>
                             <Text style={GlobalStyles.Title}>{nomEleve} {prenomEleve}</Text>

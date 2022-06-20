@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 const { height, width } = Dimensions.get('window');
 
-class TaskStudentItem extends React.Component {
+class StudentEmpItem extends React.Component {
 
 
     constructor(props) {
@@ -16,9 +16,11 @@ class TaskStudentItem extends React.Component {
     }
 
     render() {
-        const { nomEleve, prenomEleve, image, classroom, tasks_count, tasks_today } = this.props.item
+        console.log(this.props.item)
+        const { prenomEleve, nomEleve, image, convocations_count, convocations_today } = this.props.item
+
         return (
-            <TouchableNativeFeedback onPress={this.props.pressHandler } style={{overflow:'visible'}}>
+            <TouchableNativeFeedback onPress={this.props.pressHandler} style={{overflow:'visible'}}>
                 <View style={GlobalStyles.cardprofilestyle}>
                     <View style={{
                         flex: 1,
@@ -26,7 +28,7 @@ class TaskStudentItem extends React.Component {
                     }}>
                         <View style={GlobalStyles.veiwimagestyle}>
                             <Image style={GlobalStyles.ImageStyle}
-                                   source={{ uri: 'http://192.168.43.35:8000/assets/'+image }}/>
+                                   source={{ uri: 'http://192.168.1.15:8000/assets/'+image }} />
                         </View>
                         <View style={GlobalStyles.Cardename}>
                             <Text style={GlobalStyles.Title}>{nomEleve} {prenomEleve}</Text>
@@ -38,13 +40,7 @@ class TaskStudentItem extends React.Component {
 
                         </View>
                     </View>
-                    <View style={GlobalStyles.TwoBlock}>
-                        <Text style={GlobalStyles.SmallBoxs}>
-                            Travails
-                            : {tasks_today}
-                        </Text>
-                        <Text style={GlobalStyles.SmallBoxs}>Total : {tasks_count}</Text>
-                    </View>
+
                 </View>
             </TouchableNativeFeedback>
 
@@ -92,8 +88,8 @@ const styles = {
 
     }
 }
-TaskStudentItem.propTypes = {
+StudentEmpItem.propTypes = {
     pressHandler: PropTypes.func.isRequired,
 };
 
-export default TaskStudentItem;
+export default StudentEmpItem;

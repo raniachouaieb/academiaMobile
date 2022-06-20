@@ -1,6 +1,6 @@
 import React ,  {useEffect, useState} from 'react'
 import { View, Text, StyleSheet, ImageBackground, Image, SafeAreaView, TouchableOpacity, TextInput} from 'react-native'
-import { Input, Icon, NativeBaseProvider, Button, InputRightAddon } from 'native-base'
+import {Input, Icon, NativeBaseProvider, Button, InputRightAddon, ScrollView} from 'native-base'
 import { FontAwesome5 } from '@expo/vector-icons'
 import bc from '../assets/bc.jpg';
 import logo from '../assets/logo.png';
@@ -8,61 +8,42 @@ import { useNavigation } from '@react-navigation/native';
 import Header from "./Header";
 
 const Suggestion = () => {
+    const [sujet, setSujet]= useState({value:'', error:''});
+    const [detail, setDetail]= useState({value:'', error:''});
+
     const navigation = useNavigation();
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
-    const URI = 'http://192.168.1.21:8000';
-    const sendSuggestion = (sujet, detail)=>{
+    const URI = 'http://192.168.1.15:8000';
+    const sendSuggestion = ()=>{
         fetch(URI + '/api/user/suggestion',{
             method:'post',
             headers:{
                 'Accept':'application/json',
                 'Content-Type':'application/json',
                 // 'Authorization' : 'Bearer '+v,
-                'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMjE6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTYzODcyNiwiZXhwIjoxNjU1NjQyMzI2LCJuYmYiOjE2NTU2Mzg3MjYsImp0aSI6Ikx2emxMTElBZmZXbVJFY0oiLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.mrtx2Ux6ZeJW5djSn4NQ6vINDy0m10Nq57lUnnQ5_iY',
+                'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMTU6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTczNTM2MCwiZXhwIjoxNjU1NzM4OTYwLCJuYmYiOjE2NTU3MzUzNjAsImp0aSI6IjdHU0c2NXY1aUN5R3F2Tk0iLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.SFzTzTtEdNLfZH8HKoe2RetkAlknPPFLICPaYW0HQLw',
 
             },
+            body: JSON.stringify({"sujet": sujet.value, "detail": detail.value})
         })
             .then((response) => response.json())
             .then((json) => {
-                console.log("--------------json-------------", json.data)
-                setData(json.data)
+                console.log("--------------json-------------", json)
+                setData(json)
+                navigation.navigate('Home');
             })
             .catch((error) => console.error(error))
             .finally(() => setLoading(false));
 
     }
 
-    useEffect( () => {
-        const asyncFetchDailyData = async () => {
-            //  const v = await AsyncStorage.getItem('token');
-            //console.log(v);
-            fetch(URI + '/api/user/suggestion',{
-                method:'post',
-                headers:{
-                    'Accept':'application/json',
-                    'Content-Type':'application/json',
-                    // 'Authorization' : 'Bearer '+v,
-                    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMjE6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTYzODcyNiwiZXhwIjoxNjU1NjQyMzI2LCJuYmYiOjE2NTU2Mzg3MjYsImp0aSI6Ikx2emxMTElBZmZXbVJFY0oiLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.mrtx2Ux6ZeJW5djSn4NQ6vINDy0m10Nq57lUnnQ5_iY',
 
-                },
-
-
-            })
-                .then((response) => response.json())
-                .then((json) => {
-                    console.log("--------------json-------------", json.data)
-                    setData(json.data)
-                })
-                .catch((error) => console.error(error))
-                .finally(() => setLoading(false));
-        }
-
-        asyncFetchDailyData();
-    }, []);
     return(
         <ImageBackground source={bc} style={styles.container}>
+            <ScrollView>
+
             <Header title={'Suggestion'} pressHandler={() => navigation.navigate('Home')}/>
 
             <View >
@@ -77,33 +58,31 @@ const Suggestion = () => {
             {/*email input field */}
             <View style={styles.buttonStyle}>
                 <View style={styles.emailInput}>
-                    <Input
-
-
-                    variant = "outline"
-                    placeholder = "Sujet"
-                    _light={{
-                        placeholderTextColor: "blueGray.400"
-                    }}
-                    _dark={{
-                        placeholderTextColor: "blueGray.50"
-                    }}
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={(text) => setSujet({value: text})}
+                        value={sujet.value}
+                        placeholder="useless placeholder"
+                        keyboardType="default"
+                        returnKeyType="next"
                     />
 
                 </View>
 
             </View>
 
-            {/*Password input fiels*/}
+            {/*textarea input field*/}
             <View style={styles.buttonStylex}>
                 <View style={styles.textarea}>
-                    <Input
-
-                        variant= "outline"
-                        multiline= {true}
-
-                        numberOfLines={4}
-                        placeholder="Détail"
+                    <TextInput
+                        multiline
+                        numberOfLines={10}
+                        style={styles.inputTextArea}
+                        onChangeText={(text) => setDetail({value: text})}
+                        value={detail.value}
+                        placeholder="useless placeholder"
+                        keyboardType="default"
+                        returnKeyType="end"
 
                     />
                 </View>
@@ -113,15 +92,16 @@ const Suggestion = () => {
 
             {/*Button */}
             <View style={styles.buttonStyle}>
-                <Button style={styles.buttonDesign} onPress={()=> sendSuggestion('hhhhh','hbhbh')} >
+                <Button style={styles.buttonDesign} onPress={()=> sendSuggestion()} >
                     Envoyer
                 </Button>
             </View>
             
             
         </View>
-
+        </ScrollView>
         </ImageBackground>
+
     )
 }
 
@@ -152,7 +132,7 @@ const styles = StyleSheet.create({
         padding:10,
     },
     textarea:{
-        height:125,
+        height:90,
         margin:20,
         marginRight:8,
         marginLeft:8,
@@ -186,7 +166,18 @@ const styles = StyleSheet.create({
         marginRight:15,
         
     },
-   
+    input: {
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+    },
+    inputTextArea: {
+        height: 60,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+    },
     buttonDesign:{
         backgroundColor:'#026efd',
         

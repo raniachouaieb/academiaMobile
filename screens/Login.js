@@ -1,17 +1,19 @@
 import React, {useState} from 'react'
-import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity} from 'react-native'
+import {View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity} from 'react-native'
 import { Input, Icon, NativeBaseProvider, Button, InputRightAddon } from 'native-base'
 import { FontAwesome5 } from '@expo/vector-icons'
 import bc from '../assets/bc.jpg';
 import logo from '../assets/logo.png';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = () => {
     const [email, setEmail]= useState({value:'bonetek01@mercantravellers.com', error:''});
     const [password, setPassword]= useState({value:'753214896', error:''});
     const navigation = useNavigation();
-    const URI = 'http://192.168.1.21:8000';
+    const URI = 'http://192.168.1.15:8000';
     myfunc =  async ()=>{
+
        //alert(URI + '/api/auth/login');
         await fetch( URI + '/api/auth/login',{
             method:'post',
@@ -19,8 +21,10 @@ const Login = () => {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
 
+
             },
             body: JSON.stringify({"email": email.value, "password": password.value})
+
 
         }).then(res => res.json())
             .then(resData =>{
@@ -28,6 +32,10 @@ const Login = () => {
                 if(resData.token){
                     navigation.navigate("Home");
                     console.log(resData);
+                    if (resData && resData && resData.token) {
+                         AsyncStorage.setItem('userToken', resData.token);
+                    }
+
                 }else{
                     alert('email ou mot de passe incorrect')
                     navigation.navigate('Login');
@@ -71,7 +79,8 @@ const Login = () => {
                         />
                     }
                     value={email.value}
-                    onChangeText={(value)=> setEmail({value: text, error: ''})}
+                    onChangeText={(text) => setEmail({email: text})}
+                    keyboardType="email-address"
                     variant = "outline"
                     placeholder = "Email"
                     _light={{
@@ -105,7 +114,7 @@ const Login = () => {
                             
                         }
                         value={password.value}
-                        onChangeText={(value)=> setPassword({value: text, error: ''})}
+                        onChangeText={(text) => setPassword({password: text})}
                         variant= "outline"
                         secureTextEntry={true}
                         placeholder="Mot de passe"

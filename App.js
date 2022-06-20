@@ -5,6 +5,10 @@ import Register from './screens/Register'
 import Home from './screens/Home'
 import Header from './screens/Header'
 import Suggestion from './screens/Suggestion'
+import Emploi from './screens/Emploi'
+import EmpByClass from './screens/EmpByClass'
+
+
 import Menuds from './screens/Menuds'
 import Task from './screens/Task'
 import Info from './screens/Info'
@@ -102,6 +106,10 @@ function Router(){
                 title: 'My home',}} component={DrawerRoutes}/>
             <Stack.Screen name="Header" component={Header}/>
             <Stack.Screen name="Suggestion" component={Suggestion}/>
+            <Stack.Screen name="Emploi" component={Emploi}/>
+            <Stack.Screen name="EmpByClass" component={EmpByClass}/>
+
+
             <Stack.Screen name="Menuds" component={Menuds}/>
             <Stack.Screen name="Task" component={Task}/>
             <Stack.Screen name="Info" component={Info}/>
