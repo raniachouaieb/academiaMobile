@@ -28,7 +28,7 @@ class StudentEmpItem extends React.Component {
                     }}>
                         <View style={GlobalStyles.veiwimagestyle}>
                             <Image style={GlobalStyles.ImageStyle}
-                                   source={{ uri: 'http://192.168.1.23:8000/assets/'+image }} />
+                                   source={{ uri: 'http://192.168.1.21:8000/assets/'+image }} />
                         </View>
                         <View style={GlobalStyles.Cardename}>
                             <Text style={GlobalStyles.Title}>{nomEleve} {prenomEleve}</Text>

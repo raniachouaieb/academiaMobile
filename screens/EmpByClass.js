@@ -24,23 +24,32 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { DataTable } from 'react-native-paper';
 
 const Emploi = () => {
-    const navigation = useNavigation();
+    const navigation = useNavigation(state => state.routes.length);
+    const id = navigation.getState('id')
+    console.log('aaaaaaaaaaaaa---',id.routeNames.indexOf('EmpByClass') );
+    let params ;
+    id.routes.forEach(item => {
+        if (item.name === 'EmpByClass')
+            params=item;
+    });
+    console.log('--------aaaa', params.params.id);
+    const idclass = params.params.id;
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
-    const URI = 'http://192.168.1.23:8000';
+    const URI = 'http://192.168.1.21:8000';
 
     useEffect( () => {
         const asyncFetchDailyData = async () => {
-            //const v = await AsyncStorage.getItem('token');
+            const token = await AsyncStorage.getItem('userToken');
             //console.log(v);
-            fetch(URI + '/api/emploi/getEmploibyStudent/11',{
+            fetch(URI + '/api/emploi/getEmploibyStudent/'+idclass,{
                 method:'get',
                 headers:{
                     'Accept':'application/json',
                     'Content-Type':'application/json',
-                    //'Authorization' : 'Bearer '+v,
-                    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMTU6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTc0MjYzOCwiZXhwIjoxNjU1NzQ2MjM4LCJuYmYiOjE2NTU3NDI2MzgsImp0aSI6IlVFbkp0aEg5NjZzOGpZbVEiLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.6sSjFujAXYtPXPxsjouvnemUay2K0IdTTU0Avfzw76M',
+                    'Authorization' : 'Bearer '+token,
+                   // 'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMTU6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTc0MjYzOCwiZXhwIjoxNjU1NzQ2MjM4LCJuYmYiOjE2NTU3NDI2MzgsImp0aSI6IlVFbkp0aEg5NjZzOGpZbVEiLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.6sSjFujAXYtPXPxsjouvnemUay2K0IdTTU0Avfzw76M',
 
                 },
 
@@ -48,8 +57,8 @@ const Emploi = () => {
             })
                 .then((response) => response.json())
                 .then((json) => {
-                    console.log("--------------json-------------", json.data)
-                    setData(json.data)
+                    console.log("--------------json-------------", json)
+                    setData(json)
                 })
                 .catch((error) => console.error(error))
                 .finally(() => setLoading(false));
@@ -77,18 +86,14 @@ const Emploi = () => {
                     renderItem={({item, index}) => (
                 <DataTable>
                     <DataTable.Header style={styles.headertab}>
-                        <DataTable.Title>{item.friday}</DataTable.Title>
+                        <DataTable.Title>{item.lundi}</DataTable.Title>
 
                     </DataTable.Header>
 
                     <DataTable.Row>
-                        <DataTable.Cell>John</DataTable.Cell>
-                        <DataTable.Cell numeric>33</DataTable.Cell>
+                        <DataTable.Cell>{item.lundi.from} à {item.lundi.to} </DataTable.Cell>
+                        <DataTable.Cell >{item.mercredi.name}</DataTable.Cell>
                     </DataTable.Row>
-
-
-
-
 
                 </DataTable>
                     )}

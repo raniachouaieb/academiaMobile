@@ -18,25 +18,26 @@ import { Badge } from 'react-native-elements';
 import Header from './Header';
 import StudentItem from "../components/Studenttems";
 import TaskStudentItem from "../components/TaskStudentItem";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Task = () => {
     const navigation = useNavigation();
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
-    const URI = 'http://192.168.1.23:8000';
+    const URI = 'http://192.168.1.21:8000';
 
     useEffect( () => {
         const asyncFetchDailyData = async () => {
-            //  const v = await AsyncStorage.getItem('token');
+              const token= await AsyncStorage.getItem('userToken');
             //console.log(v);
             fetch(URI + '/api/task/listEnf',{
                 method:'get',
                 headers:{
                     'Accept':'application/json',
                     'Content-Type':'application/json',
-                    // 'Authorization' : 'Bearer '+v,
-                    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjQzLjM1OjgwMDBcL2FwaVwvYXV0aFwvbG9naW4iLCJpYXQiOjE2NTU3MjAzNTEsImV4cCI6MTY1NTcyMzk1MSwibmJmIjoxNjU1NzIwMzUxLCJqdGkiOiJJa1FESkpJOU1KWXJhQXpuIiwic3ViIjoxMTEsInBydiI6ImZjNzY4MjRmYWUzMmNiZWEyMmJmZmFkZTNiNTUyMDAwOGYzNzA4NzIifQ.U3tEMH9OQHhzXuE_Hu2LuCRRdnZZiPo8N14VNovPJbg',
+                     'Authorization' : 'Bearer '+token
+                   // 'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjQzLjM1OjgwMDBcL2FwaVwvYXV0aFwvbG9naW4iLCJpYXQiOjE2NTU3MjAzNTEsImV4cCI6MTY1NTcyMzk1MSwibmJmIjoxNjU1NzIwMzUxLCJqdGkiOiJJa1FESkpJOU1KWXJhQXpuIiwic3ViIjoxMTEsInBydiI6ImZjNzY4MjRmYWUzMmNiZWEyMmJmZmFkZTNiNTUyMDAwOGYzNzA4NzIifQ.U3tEMH9OQHhzXuE_Hu2LuCRRdnZZiPo8N14VNovPJbg',
 
                 },
 
@@ -67,7 +68,8 @@ const Task = () => {
                 <FlatList
                     data={data}
                     renderItem={({item, index}) => (
-                        <TaskStudentItem item={item} index={index}   pressHandler={() => navigation.navigate('ListTask')}/>
+                        // console.log('id', item.class.id),
+                        <TaskStudentItem item={item} index={index}   pressHandler={() => navigation.navigate('ListTask',{id: item.class.id})}/>
                     )}
 
                     keyExtractor={(item => item.id)}

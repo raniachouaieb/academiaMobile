@@ -21,23 +21,32 @@ import Header from "./Header";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ListTask = () => {
-    const navigation = useNavigation();
+    const navigation = useNavigation(state => state.routes.length);
+    const id = navigation.getState('id')
+    console.log('aaaaaaaaaaaaa---',id.routeNames.indexOf('ListTask') );
+    let params ;
+    id.routes.forEach(item => {
+        if (item.name === 'ListTask')
+            params=item;
+    });
+    console.log('--------aaaa', params.params.id);
+    const idclass = params.params.id;
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
-    const URI = 'http://192.168.1.23:8000';
+    const URI = 'http://192.168.1.21:8000';
 
     useEffect( () => {
         const asyncFetchDailyData = async () => {
             const token = await AsyncStorage.getItem('userToken');
             //console.log(v);
-            fetch(URI + '/api/task/listTask/18',{
+            fetch(URI + '/api/task/listTask/'+idclass,{
                 method:'get',
                 headers:{
                     'Accept':'application/json',
                     'Content-Type':'application/json',
-                    // 'Authorization' : 'Bearer '+v,
-                    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMjE6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTY0NTA2OCwiZXhwIjoxNjU1NjQ4NjY4LCJuYmYiOjE2NTU2NDUwNjgsImp0aSI6Iks1MW83YTRBQ3hHTVdKYlMiLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.5yTKJYY4Jq5KvbPszjuKVS4_ancP5FOUQEpckXmJHGw',
+                     'Authorization' : 'Bearer '+token,
+                   // 'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMjE6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTY0NTA2OCwiZXhwIjoxNjU1NjQ4NjY4LCJuYmYiOjE2NTU2NDUwNjgsImp0aSI6Iks1MW83YTRBQ3hHTVdKYlMiLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.5yTKJYY4Jq5KvbPszjuKVS4_ancP5FOUQEpckXmJHGw',
 
                 },
 
