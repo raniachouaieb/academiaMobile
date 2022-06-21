@@ -18,30 +18,42 @@ import { useNavigation } from '@react-navigation/native';
 import { Badge } from 'react-native-elements';
 import StudentItem from "../components/Studenttems";
 import ConvocationDetailtems from "../components/ConvocationDetailtems";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ListConv = () => {
-    const navigation = useNavigation();
+
+    const navigation = useNavigation(state => state.routes.length);
+    const id = navigation.getState('id')
+    console.log('aaaaaaaaaaaaa---',id.routeNames.indexOf('ListConv') );
+    let params ;
+    id.routes.forEach(item => {
+       if (item.name === 'ListConv')
+           params=item;
+    });
+    console.log('--------aaaa', params.params.id);
+    const idstudent = params.params.id;
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
-    const URI = 'http://192.168.1.15:8000';
+    const URI = 'http://192.168.1.23:8000';
 
     useEffect( () => {
+
         const asyncFetchDailyData = async () => {
-            //  const v = await AsyncStorage.getItem('token');
+              const v = await AsyncStorage.getItem('userToken');
             //console.log(v);
-            fetch(URI + '/api/convocation/listConvocation/id',{
+            fetch(URI + '/api/convocation/listConvocation/'+idstudent,{
                 method:'get',
                 headers:{
                     'Accept':'application/json',
                     'Content-Type':'application/json',
-                    // 'Authorization' : 'Bearer '+v,
-                    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMTU6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTc0NDc3NCwiZXhwIjoxNjU1NzQ4Mzc0LCJuYmYiOjE2NTU3NDQ3NzQsImp0aSI6IkZuN1J5UGZvTzU1aVNDaHciLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.fIQfjeUJ59EOqVpJYEr6iPjhAay0zvBtOvZpinpnGHY',
+                     'Authorization' : 'Bearer '+v,
+                   // 'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMjM6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTgwMjk4OCwiZXhwIjoxNjU1ODA2NTg4LCJuYmYiOjE2NTU4MDI5ODgsImp0aSI6IkltWEk1R3d2aDQ1SVA3TlMiLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.hymYfl2f8PT7S4ltML2-TqWDu7dtAK6jAMxL-uNIz08',
 
                 },
 
 
             })
+
                 .then((response) => response.json())
                 .then((json) => {
                     console.log("--------------json-------------", json.data)

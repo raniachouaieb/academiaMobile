@@ -11,7 +11,7 @@ const Login = () => {
     const [email, setEmail]= useState({value:'bonetek01@mercantravellers.com', error:''});
     const [password, setPassword]= useState({value:'753214896', error:''});
     const navigation = useNavigation();
-    const URI = 'http://192.168.1.15:8000';
+    const URI = 'http://192.168.1.23:8000';
     myfunc =  async ()=>{
 
        //alert(URI + '/api/auth/login');
@@ -27,16 +27,16 @@ const Login = () => {
 
 
         }).then(res => res.json())
-            .then(resData =>{
+            .then(async resData => {
                 //console.log(resData)
-                if(resData.token){
+                if (resData.token) {
                     navigation.navigate("Home");
                     console.log(resData);
-                    if (resData && resData && resData.token) {
-                         AsyncStorage.setItem('userToken', resData.token);
-                    }
 
-                }else{
+                    await AsyncStorage.setItem('userToken', resData.token);
+
+
+                } else {
                     alert('email ou mot de passe incorrect')
                     navigation.navigate('Login');
                 }
@@ -78,8 +78,9 @@ const Login = () => {
 
                         />
                     }
+
+                    onChangeText={(text) => setEmail({value: text})}
                     value={email.value}
-                    onChangeText={(text) => setEmail({email: text})}
                     keyboardType="email-address"
                     variant = "outline"
                     placeholder = "Email"
@@ -113,8 +114,9 @@ const Login = () => {
                             />
                             
                         }
+
+                        onChangeText={(text) => setPassword({value: text})}
                         value={password.value}
-                        onChangeText={(text) => setPassword({password: text})}
                         variant= "outline"
                         secureTextEntry={true}
                         placeholder="Mot de passe"

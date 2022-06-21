@@ -16,7 +16,7 @@ class TaskStudentItem extends React.Component {
     }
 
     render() {
-        const { nomEleve, prenomEleve, image, classroom, tasks_count, tasks_today } = this.props.item
+        const { nomEleve, prenomEleve, image, tasks_count, tasks_today } = this.props.item
         return (
             <TouchableNativeFeedback onPress={this.props.pressHandler } style={{overflow:'visible'}}>
                 <View style={GlobalStyles.cardprofilestyle}>
@@ -26,7 +26,7 @@ class TaskStudentItem extends React.Component {
                     }}>
                         <View style={GlobalStyles.veiwimagestyle}>
                             <Image style={GlobalStyles.ImageStyle}
-                                   source={{ uri: 'http://192.168.43.35:8000/assets/'+image }}/>
+                                   source={{ uri: 'http://192.168.1.23:8000/assets/'+image }}/>
                         </View>
                         <View style={GlobalStyles.Cardename}>
                             <Text style={GlobalStyles.Title}>{nomEleve} {prenomEleve}</Text>

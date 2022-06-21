@@ -27,19 +27,19 @@ const Convocation = () => {
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
-    const URI = 'http://192.168.1.15:8000';
+    const URI = 'http://192.168.1.23:8000';
 
     useEffect( () => {
         const asyncFetchDailyData = async () => {
-            //const v = await AsyncStorage.getItem('token');
-            //console.log(v);
+            const token = await AsyncStorage.getItem('userToken');
+
             fetch(URI + '/api/convocation/convocation',{
                 method:'get',
                 headers:{
                     'Accept':'application/json',
                     'Content-Type':'application/json',
-                     //'Authorization' : 'Bearer '+v,
-                    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMTU6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTc0NDc3NCwiZXhwIjoxNjU1NzQ4Mzc0LCJuYmYiOjE2NTU3NDQ3NzQsImp0aSI6IkZuN1J5UGZvTzU1aVNDaHciLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.fIQfjeUJ59EOqVpJYEr6iPjhAay0zvBtOvZpinpnGHY',
+                     'Authorization' : 'Bearer '+token,
+                 //   'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMjM6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTgyMTU4MCwiZXhwIjoxNjU1ODI1MTgwLCJuYmYiOjE2NTU4MjE1ODAsImp0aSI6ImdxbUtrM2ZRWVpnRzg0YWoiLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.JgT3X1sKpA-XJnz1wMhqMMhvTTs9NC7H7Blaz8SD3ZE',
 
                 },
 
@@ -75,25 +75,7 @@ const Convocation = () => {
                 keyExtractor={(item => item.id)}
             />
 
-            {/*<View style={styles.middle}>*/}
-            {/*        <TouchableOpacity onPress={()=> navigation.navigate('ListConv')}>*/}
-            {/*            <View style={styles.cardContainer}>*/}
-            {/*                */}
-            {/*                <Image source={enf1} style={styles.img}/>*/}
-            {/*                <View style={styles.info}>*/}
-            {/*                <Text style={styles.nom} >salma chaouch</Text>*/}
-            {/*                <Text > Niveau : 1ere année</Text>*/}
-            {/*                <Text > Classe : Farachet</Text>*/}
-            {/*                <Text style={styles.day}>Total Convocation: */}
-            {/*                <Badge value="2" status="success" /> */}
-            {/*                </Text>*/}
 
-            {/*                </View>*/}
-
-            {/*            </View>*/}
-            {/*        </TouchableOpacity>*/}
-
-            {/*</View>*/}
              
             
         </View>

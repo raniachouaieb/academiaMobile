@@ -18,17 +18,18 @@ import enf1 from '../assets/enf1.jpg'
 import { Badge } from 'react-native-elements';
 import TaskDetailItems from "../components/TaskDetailItems";
 import Header from "./Header";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ListTask = () => {
     const navigation = useNavigation();
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
-    const URI = 'http://192.168.1.15:8000';
+    const URI = 'http://192.168.1.23:8000';
 
     useEffect( () => {
         const asyncFetchDailyData = async () => {
-            //  const v = await AsyncStorage.getItem('token');
+            const token = await AsyncStorage.getItem('userToken');
             //console.log(v);
             fetch(URI + '/api/task/listTask/18',{
                 method:'get',

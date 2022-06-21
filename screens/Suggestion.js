@@ -15,7 +15,7 @@ const Suggestion = () => {
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
-    const URI = 'http://192.168.1.15:8000';
+    const URI = 'http://192.168.1.23:8000';
     const sendSuggestion = ()=>{
         fetch(URI + '/api/user/suggestion',{
             method:'post',

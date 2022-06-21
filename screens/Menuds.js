@@ -21,24 +21,25 @@ import moment from "moment";
 import Sm from "../components/Sm";
 import {Card, ScrollView} from "native-base";
 import HTMLView from "react-native-htmlview/HTMLView";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const Menuds = () => {
     const navigation = useNavigation();
     const [data, setData] = useState();
     const [isLoading, setLoading] = useState(true);
-    const URI = 'http://192.168.1.15:8000';
+    const URI = 'http://192.168.1.23:8000';
     useEffect( () => {
         const asyncFetchDailyData = async () => {
-            //  const v = await AsyncStorage.getItem('token');
+            const token = await AsyncStorage.getItem('userToken');
             //console.log(v);
             fetch(URI + '/api/menu/menuds',{
                 method:'get',
                 headers:{
                     'Accept':'application/json',
                     'Content-Type':'application/json',
-                    // 'Authorization' : 'Bearer '+v,
-                    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMTU6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTczNTM2MCwiZXhwIjoxNjU1NzM4OTYwLCJuYmYiOjE2NTU3MzUzNjAsImp0aSI6IjdHU0c2NXY1aUN5R3F2Tk0iLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.SFzTzTtEdNLfZH8HKoe2RetkAlknPPFLICPaYW0HQLw',
+                   'Authorization' : 'Bearer '+token,
+                  //  'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMTU6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTczNTM2MCwiZXhwIjoxNjU1NzM4OTYwLCJuYmYiOjE2NTU3MzUzNjAsImp0aSI6IjdHU0c2NXY1aUN5R3F2Tk0iLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.SFzTzTtEdNLfZH8HKoe2RetkAlknPPFLICPaYW0HQLw',
                 },
             })
                 .then((response) => response.json())
@@ -52,6 +53,10 @@ const Menuds = () => {
 
         asyncFetchDailyData();
     }, []);
+    const reformathtml =(item)=>{
+        let text = item.replace(/<[^>]*>?/gm, '')
+        return <Text> {text}</Text>;
+    }
 
     return(
         <ImageBackground source={bc} style={styles.body}>
@@ -67,9 +72,10 @@ const Menuds = () => {
 
                     <View style={styles.middle}>
                         <View style={styles.cardContainer}>
-                           <Image style={styles.img} source={{ uri: 'http://192.168.1.15:8080/assets/'+item.image }}/>
+                           <Image style={styles.img} source={{ uri: 'http://192.168.1.23:8080/assets/'+item.image }}/>
                             <Text style={styles.day}>{item.jour} </Text>
-                            <HTMLView  style={styles.menu}  value={item.menu}/>
+                            {/*<Text> {reformathtml(item.menu)}</Text>*/}
+                            <HTMLView  style={styles.menu}  value={`<div>${item.menu.replace(/(\r\n|\n|\r)/gm, "<br>")}</div>`}/>
                     {/*        <Text style={styles.menu}>Plat principal : Spaghetti</Text>*/}
                     {/*        <Text style={styles.menu}>Dessert : Pomme</Text>*/}
                            <Sm style={[GlobalStyles.CardHeaderLeftBottom, GlobalStyles.Infor]}> {item.date} </Sm>
@@ -98,7 +104,7 @@ const styles = StyleSheet.create({
         margin:8,
         marginTop:20,
         backgroundColor:'#fff',
-        height:300,
+
         borderRadius:20,
         shadowColor:'#000',
         shadowOffset: {width:12, height:5},

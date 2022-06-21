@@ -38,9 +38,9 @@ export default Header
 const styles = StyleSheet.create({
     
         header:{
-            flex: 1,
+
             width: 375,
-            height:37,
+            height:65,
             padding:15,
             alignItems:'center',
           flexDirection:'row',

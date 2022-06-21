@@ -24,7 +24,7 @@ const Task = () => {
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
-    const URI = 'http://192.168.1.15:8000';
+    const URI = 'http://192.168.1.23:8000';
 
     useEffect( () => {
         const asyncFetchDailyData = async () => {
@@ -61,9 +61,9 @@ const Task = () => {
             <View >
 
 
-            <View style={styles.middle}>
-                <Text style={styles.text}>Mon/ Mes enfant(s)</Text>
-            </View>
+                <View style={styles.middle}>
+                    <Text style={styles.text}>Mon/ Mes enfant(s)</Text>
+                </View>
                 <FlatList
                     data={data}
                     renderItem={({item, index}) => (
