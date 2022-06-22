@@ -37,7 +37,7 @@ const Emploi = () => {
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
-    const URI = 'http://192.168.1.23:8000';
+    const URI = 'http://192.168.1.21:8000';
 
     useEffect( () => {
         const asyncFetchDailyData = async () => {
@@ -104,7 +104,7 @@ const Emploi = () => {
                     keyExtractor={(item => item.id)}
                     renderItem={({item, index}) => (
 
-                <DataTable>
+                <DataTable style={styles.card}>
                     <DataTable.Header style={styles.headertab}>
 
                         <DataTable.Title>{item.day}</DataTable.Title>
@@ -168,6 +168,14 @@ const styles = StyleSheet.create({
         height:45,
         borderTopLeftRadius:15,
         borderTopRightRadius:15,
+    },
+    card:{
+        width: deviceWidth - 20,
+        margin:8,
+        marginTop:15,
+        backgroundColor:'#fff',
+
+
     },
     year:{
         textAlign:'center',

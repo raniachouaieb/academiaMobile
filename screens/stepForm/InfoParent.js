@@ -10,6 +10,7 @@ import {TextField} from "@material-ui/core";
 //import Button from '@material-ui/core/Button';
 import {StatusBar} from "expo-status-bar";
 import {useNavigation} from "@react-navigation/native";
+import Header from "../Header";
 const windowWidth = Dimensions.get('screen').width;
 const windowHeight = Dimensions.get('screen').height;
 
@@ -78,6 +79,10 @@ let infoParent={
     }
 
     return (
+        <View style={{flex:1}}>
+
+
+            <Header title ={'Register'}/>
         <ImageBackground source={bc} style={styles.container}>
             <KeyboardAvoidingView style={{ flex: 1, flexDirection: 'column',justifyContent: 'center',}} behavior="padding" enabled   keyboardVerticalOffset={40}  >
                 <ScrollView >
@@ -98,7 +103,7 @@ let infoParent={
 
                         }}
                         leftIcon='face-man'
-                        placeholder='Enter First name'
+                        placeholder='Entrer votre nom'
                         autoCapitalize='none'
                         keyboardType='email-address'
                         textContentType='emailAddress'
@@ -117,7 +122,7 @@ let infoParent={
                             marginBottom: 20
                         }}
                         leftIcon='face-man'
-                        placeholder='Enter Last name'
+                        placeholder='Entrer votre prenom'
                         autoCapitalize='none'
                         keyboardType='email-address'
                         textContentType='emailAddress'
@@ -135,7 +140,7 @@ let infoParent={
                             marginBottom: 20
                         }}
                         leftIcon='cellphone'
-                        placeholder='Enter your phone number'
+                        placeholder='Entrer votre numéro du telephone'
                         autoCapitalize='none'
                         keyboardType='numeric'
                         textContentType='emailAddress'
@@ -154,7 +159,7 @@ let infoParent={
                                 marginBottom: 20
                             }}
                             leftIcon='bag-suitcase'
-                            placeholder='Enter Travail'
+                            placeholder='Votre profession'
                             autoCapitalize='none'
 
                             value={travail}
@@ -175,7 +180,7 @@ let infoParent={
 
                             }}
                             leftIcon='face-woman'
-                            placeholder='Enter First name'
+                            placeholder='Entrer votre nom'
                             autoCapitalize='none'
                             keyboardType='email-address'
                             textContentType='emailAddress'
@@ -194,7 +199,7 @@ let infoParent={
                                 marginBottom: 20
                             }}
                             leftIcon='face-woman'
-                            placeholder='Enter Last name'
+                            placeholder='Entrer votre prenom'
                             autoCapitalize='none'
                             keyboardType='email-address'
                             textContentType='emailAddress'
@@ -212,7 +217,7 @@ let infoParent={
                                 marginBottom: 20
                             }}
                             leftIcon='cellphone'
-                            placeholder='Enter your phone number'
+                            placeholder='Entrer votre numéro telephone'
                             autoCapitalize='none'
                             keyboardType='numeric'
                             textContentType='emailAddress'
@@ -231,7 +236,7 @@ let infoParent={
                                 marginBottom: 20
                             }}
                             leftIcon='bag-suitcase'
-                            placeholder='Enter Travail'
+                            placeholder='Votre profession'
                             autoCapitalize='none'
 
                             value={travailMaman}
@@ -259,6 +264,7 @@ let infoParent={
                 </ScrollView>
             </KeyboardAvoidingView>
         </ImageBackground>
+        </View>
     )
 
 

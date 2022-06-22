@@ -10,6 +10,7 @@ import {TextField} from "@material-ui/core";
 //import Button from '@material-ui/core/Button';
 import {StatusBar} from "expo-status-bar";
 import {useNavigation} from "@react-navigation/native";
+import Header from "../Header";
 const windowWidth = Dimensions.get('screen').width;
 const windowHeight = Dimensions.get('screen').height;
 
@@ -91,12 +92,17 @@ const Contact = ({ formData, setForm})=>{
     }
 
     return (
+        <View style={{flex:1}}>
+
+
+            <Header title ={'Register'}/>
         <ImageBackground source={bc} style={styles.container}>
             <KeyboardAvoidingView style={{ flex: 1, flexDirection: 'column',justifyContent: 'center',}} behavior="padding" enabled   keyboardVerticalOffset={40}  >
                 <ScrollView >
                     <StatusBar style='dark-content' />
                     <View style={styles.container}>
 
+                        <Text style={styles.title}>3-Contact</Text>
 
                         <InputField
                             inputStyle={{
@@ -109,8 +115,8 @@ const Contact = ({ formData, setForm})=>{
 
 
                             }}
-                            leftIcon='face-man'
-                            placeholder='Enter addresse'
+                            leftIcon='address'
+                            placeholder='Votre adresse'
                             autoCapitalize='none'
                             keyboardType='email-address'
                             textContentType='emailAddress'
@@ -129,7 +135,7 @@ const Contact = ({ formData, setForm})=>{
                                 marginBottom: 20
                             }}
                             leftIcon='face-man'
-                            placeholder='Enter nombre enfant'
+                            placeholder='Entrer nombre enfant'
                             autoCapitalize='none'
                             keyboardType='numeric'
                             textContentType='emailAddress'
@@ -146,8 +152,8 @@ const Contact = ({ formData, setForm})=>{
                                 backgroundColor: '#fff',
                                 marginBottom: 20
                             }}
-                            leftIcon='cellphone'
-                            placeholder='Enter email'
+                            leftIcon='email'
+                            placeholder='Votre email'
                             autoCapitalize='none'
 
 
@@ -165,7 +171,7 @@ const Contact = ({ formData, setForm})=>{
                                 marginBottom: 20
                             }}
                             leftIcon='lock'
-                            placeholder='Enter password'
+                            placeholder='Votre mot de passe'
                             autoCapitalize='none'
                             autoCorrect={false}
                             secureTextEntry={passwordVisibility}
@@ -198,6 +204,7 @@ const Contact = ({ formData, setForm})=>{
                 </ScrollView>
             </KeyboardAvoidingView>
         </ImageBackground>
+        </View>
     )
 
 

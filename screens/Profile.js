@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity, SafeAreaView} from 'react-native'
+import {
+    View,
+    Text,
+    StyleSheet,
+    Dimensions,
+    ImageBackground,
+    Image,
+    TouchableOpacity,
+    SafeAreaView,
+    FlatList
+} from 'react-native'
 import {Input, Icon, NativeBaseProvider, Button, InputRightAddon, ScrollView} from 'native-base'
 import { FontAwesome5 } from '@expo/vector-icons'
 import bc from '../assets/bc.jpg'
@@ -15,10 +25,18 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile = () => {
     const navigation = useNavigation();
-    const URI = 'http://192.168.1.23:8000';
+    const URI = 'http://192.168.1.21:8000';
     const [data,setData]=useState();
+    const [nomPere,setnomPere]= useState();
+    const [prenomPere , setprenomPere]=useState();
+    const [telPere , settelPere]=useState();
+    const [email,setemail]=useState();
+    const [kids, setkids]=useState();
+    const [isloading, setisloading]=useState(false);
+    const [kidspicture, setkidspicture]=useState([]);
 
-    useEffect( () => {
+    useEffect( async () => {
+        setisloading(true);
         const asyncFetchDailyData = async () => {
             const token = await AsyncStorage.getItem('userToken');
             const id = await AsyncStorage.getItem('id');
@@ -40,7 +58,22 @@ const Profile = () => {
                 .then((json) => {
                     console.log("--------------json-------------", json)
                     setData(json.data)
-                    setImage(json.data.image_profile);
+                    setkids(json['0']);
+                    let holder=[];
+                    json['0'].forEach(element =>{
+                        holder.push(element.image)
+
+                    })
+                    console.log('-----------holder------',holder);
+                    setkidspicture(holder);
+
+                    setprenomPere(json.data.prenomPere)
+                    setnomPere(json.data.nomPere)
+                    settelPere(json.data.telPere)
+                    setemail(json.data.email)
+                    setImage('http://192.168.1.21:8000/assets/'+json.data.image_profile);
+
+                    setisloading(false)
                 })
                 .catch((error) => console.error(error))
 
@@ -64,9 +97,30 @@ const Profile = () => {
         }
     
         let pickerResult = await ImagePicker.launchImageLibraryAsync();
-        /*console.log(pickerResult);*/
+        console.log(pickerResult);
         setImage(pickerResult.uri);
       }
+    let openImagePickerAsynckids = async (id) => {
+         setisloading(true)
+         console.log('id', id);
+        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+        if (permissionResult.granted === false) {
+            alert("Permission to access camera roll is required!");
+            return;
+        }
+
+
+        let pickerResult = await ImagePicker.launchImageLibraryAsync();
+        console.log(pickerResult);
+        let inter =kidspicture;
+        inter[id]=pickerResult.uri;
+        setkidspicture(inter);
+        console.log('inside funcction-----', kidspicture);
+        console.log('---------inter-------',inter);
+        setisloading(false);
+    }
+
       let openCamera = async () => {
         let permissionResult = await ImagePicker.requestCameraPermissionsAsync();
     
@@ -82,126 +136,103 @@ const Profile = () => {
     return(
         <ScrollView>
             <ImageBackground source={bc} style={styles.container} >
-                <View>
+                {isloading?<Text>pleasewait senior</Text>:<View>
 
 
-                        <View style={styles.middle}>
-                            <View style={styles.cardContainer}>
-                              <View style={styles.middle}>
-                                    <TouchableOpacity onPress={toggleBottomNavigationView} style={styles.button}>
-                                        {/*<Image source={parent} style={styles.img}/>*/}
-                                       <Image source={image===null?parent:{uri:'http://192.168.1.23:8000/assets/uploads/parents/6gQMGbnf6PuGZqNsZfYMXKQNyyDv38aKXRiDEeBF.jpg'}} style={styles.img}/>
-                                        <FontAwesome5 name="camera" size={22} color="black" style={styles.camera}/>
-                                    </TouchableOpacity>
+                    <View style={styles.middle}>
+                        <View style={styles.cardContainer}>
+                            <View style={styles.middle}>
+                                <TouchableOpacity onPress={toggleBottomNavigationView} style={styles.button}>
+                                    {/*<Image source={parent} style={styles.img}/>*/}
+                                    <Image
+                                        source={image === null ? parent : {uri: image}}
+                                        style={styles.img}/>
+                                    <FontAwesome5 name="camera" size={22} color="black" style={styles.camera}/>
+                                </TouchableOpacity>
 
 
-                                          <View style={GlobalStyles.Cardename}>
-                                            <Text  style={styles.nom}>  {data.nomPere}  {data.prenomPere}</Text>
-                                            <Text ><FontAwesome5 name="envelope" size={18} color="black"/>  {data.email} </Text>
-                                            <Text><FontAwesome5 name="phone" size={18} color="black"/>    {data.telPere}</Text>
-                                          </View>
-
-                                  <View>
-
-                                  <TouchableOpacity onPress={toggleBottomNavigationView} style={styles.button}>
-                                      {/*<Image source={parent} style={styles.img}/>*/}
-                                      <Image source={{uri: image==null?enf2:image}} style={styles.img}/>
-                                      <FontAwesome5 name="camera" size={22} color="black" style={styles.camera}/>
-                                  </TouchableOpacity>
-
-                                  <View style={styles.info}>
-
-                                      <Text  style={styles.nom}><FontAwesome5 name="user" size={18} color="black"/>   samir ali</Text>
-                                  </View>
-                                  </View>
-                                   
+                                <View style={GlobalStyles.Cardename}>
+                                    <Text style={styles.nom}>{nomPere} {prenomPere} </Text>
+                                    <Text><FontAwesome5 name="envelope" size={18} color="black"/>{email} </Text>
+                                    <Text><FontAwesome5 name="phone" size={18} color="black"/> {telPere}</Text>
                                 </View>
+                                <FlatList data={kids} renderItem={({item,index})=>{
 
-                            </View>
+                                    console.log('---------------item------------',item)
 
-                        </View>  
+                                    return(
+                                            <View>
 
+                                                <TouchableOpacity onPress={()=>openImagePickerAsynckids(index)} style={styles.button}>
+                                                    {console.log('kidspic',kidspicture)}
+                                                    <Image source={image === null ? parent : {uri: kidspicture[index]}}
+                                                           style={styles.img}/>
+                                                    <FontAwesome5 name="camera" size={22} color="black" style={styles.camera}/>
+                                                </TouchableOpacity>
 
+                                                <View style={styles.info}>
 
-                        <View style={styles.middle}>
-                            <View style={styles.box}>
-                                <View style={styles.inner}>
-                                    <View style={styles.middle}>
-                                            <TouchableOpacity onPress={toggleBottomNavigationView} style={styles.button}>
-                                                {/*<Image source={parent} style={styles.img}/>*/}
-                                            <Image source={{uri: image==null?enf2:image}} style={styles.img}/>
-                                                <FontAwesome5 name="camera" size={22} color="black" style={styles.camera}/>
-                                            </TouchableOpacity>
-
-                                            <View style={styles.info}>
-                                            
-                                                <Text  style={styles.nom}><FontAwesome5 name="user" size={18} color="black"/>   samir ali</Text>
+                                                    <Text style={styles.nom}><FontAwesome5 name="user" size={18}
+                                                        color="black"/>{item.nomEleve} {item.prenomEleve} </Text>
+                                                </View>
                                             </View>
-                                        
-                                    </View>
+                                        )
 
-                                </View>
+
+                                }
+
+                                }                keyExtractor={(item => item.id)}
+
+                                />
+
+
                             </View>
-                           
+
                         </View>
 
-                        <View style={styles.middle}>
-                            <View style={styles.box}>
-                                <View style={styles.inner}>
-                                <View style={styles.middle}>
-                                        <TouchableOpacity onPress={toggleBottomNavigationView} style={styles.button}>
-                                            {/*<Image source={parent} style={styles.img}/>*/}
-                                        <Image source={{uri: image==null?avatar:image}} style={styles.img}/>
-                                            <FontAwesome5 name="camera" size={22} color="black" style={styles.camera}/>
-                                        </TouchableOpacity>
+                    </View>
 
-                                        <View style={styles.info}>
-                                        
-                                            <Text  style={styles.nom}><FontAwesome5 name="user" size={18} color="black"/>   samir ali</Text>
-                                        </View>
-                                    
-                                </View>
 
-                                </View>
-                            </View>
-                        </View>
 
-                        <BottomSheet
-                            visible={visible}
-                            //setting the visibility state of the bottom shee
-                            onBackButtonPress={toggleBottomNavigationView}
-                            //Toggling the visibility state on the click of the back botton
-                            onBackdropPress={toggleBottomNavigationView}
-                            //Toggling the visibility state on the clicking out side of the sheet
-                            >
-                            {/*Bottom Sheet inner View*/}
-                            <View style={styles.bottomNavigationView}>
+
+
+
+                    <BottomSheet
+                        visible={visible}
+                        //setting the visibility state of the bottom shee
+                        onBackButtonPress={toggleBottomNavigationView}
+                        //Toggling the visibility state on the click of the back botton
+                        onBackdropPress={toggleBottomNavigationView}
+                        //Toggling the visibility state on the clicking out side of the sheet
+                    >
+                        {/*Bottom Sheet inner View*/}
+                        <View style={styles.bottomNavigationView}>
                             <View style={styles.panelHeader}/>
-                            <View style={styles.panelHandle} />
-                                <View
-                                    style={{
-                                        flex: 1,
-                                        flexDirection: 'column',
-                                        justifyContent: 'space-between',
-                                    }}>
-                                    <Text style={styles.bottomSheetTitle}>
-                                        Changer photo de profil
-                                    </Text>
-                                </View>
-                                <View>
-                                    <TouchableOpacity style={styles.panelButton} onPress={openImagePickerAsync}>
-                                        <Text style={styles.panelButtonTitle}> Choisir photo</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.panelButton} onPress={openCamera}>
-                                        <Text style={styles.panelButtonTitle}> Prendre photo</Text>
-                                    </TouchableOpacity>
-                                </View>
-
+                            <View style={styles.panelHandle}/>
+                            <View
+                                style={{
+                                    flex: 1,
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between',
+                                }}>
+                                <Text style={styles.bottomSheetTitle}>
+                                    Changer photo de profil
+                                </Text>
                             </View>
-                        </BottomSheet>
-                       
-             
-                </View>
+                            <View>
+                                <TouchableOpacity style={styles.panelButton} onPress={openImagePickerAsync}>
+                                    <Text style={styles.panelButtonTitle}> Choisir photo</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.panelButton} onPress={openCamera}>
+                                    <Text style={styles.panelButtonTitle}> Prendre photo</Text>
+                                </TouchableOpacity>
+                            </View>
+
+                        </View>
+                    </BottomSheet>
+
+
+                </View>}
             </ImageBackground>
         </ScrollView>
 
