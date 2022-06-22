@@ -22,7 +22,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ListConv = () => {
 
-    const navigation = useNavigation(state => state.routes.length);
+    const navigation = useNavigation();
     const id = navigation.getState('id')
     console.log('aaaaaaaaaaaaa---',id.routeNames.indexOf('ListConv') );
     let params ;

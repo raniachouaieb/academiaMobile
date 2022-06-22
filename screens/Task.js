@@ -25,7 +25,7 @@ const Task = () => {
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
-    const URI = 'http://192.168.1.21:8000';
+    const URI = 'http://192.168.1.23:8000';
 
     useEffect( () => {
         const asyncFetchDailyData = async () => {

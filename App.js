@@ -7,7 +7,7 @@ import Header from './screens/Header'
 import Suggestion from './screens/Suggestion'
 import Emploi from './screens/Emploi'
 import EmpByClass from './screens/EmpByClass'
-
+import  Enfant from './screens/stepForm/Enfant'
 
 import Menuds from './screens/Menuds'
 import Task from './screens/Task'
@@ -19,6 +19,7 @@ import ListConv from './screens/ListConv'
 import ForgotPass from './screens/ForgotPass'
 import Profile from './screens/Profile'
 import Contact from './screens/Contact'
+import Contact1 from './screens/stepForm/Contact'
 import ComplementInfo from './screens/ComplementInfo'
 import CustomDrawer from "./components/CustomDrawer";
 import MultiStepForm from "./screens/MultiStepForm";
@@ -123,6 +124,10 @@ function Router(){
             <Stack.Screen name="ForgotPass" component={ForgotPass}/>
             <Stack.Screen name="Contact" component={Contact}/>
             <Stack.Screen name="MultiStepForm" component={MultiStepForm}/>
+            <Stack.Screen name="Contact1" component={Contact1}/>
+            <Stack.Screen name="Enfant" component={Enfant}/>
+
+
 
 
 

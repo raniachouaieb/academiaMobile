@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image, TouchableOpacity, SafeAreaView} from 'react-native'
 import {Input, Icon, NativeBaseProvider, Button, InputRightAddon, ScrollView} from 'native-base'
 import { FontAwesome5 } from '@expo/vector-icons'
@@ -11,9 +11,43 @@ import avatar from '../assets/avatr.jpg';
 import enf2 from '../assets/enf2.jpg';
 import 'react-native-gesture-handler'
 import GlobalStyles from "../assets/GlobalStyles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile = () => {
     const navigation = useNavigation();
+    const URI = 'http://192.168.1.23:8000';
+    const [data,setData]=useState();
+
+    useEffect( () => {
+        const asyncFetchDailyData = async () => {
+            const token = await AsyncStorage.getItem('userToken');
+            const id = await AsyncStorage.getItem('id');
+            console.log('-------id----------',id);
+
+            fetch(URI + '/api/user/profile/'+id,{
+                method:'get',
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type':'application/json',
+                    'Authorization' : 'Bearer '+token,
+                    //   'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjEuMjM6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY1NTgyMTU4MCwiZXhwIjoxNjU1ODI1MTgwLCJuYmYiOjE2NTU4MjE1ODAsImp0aSI6ImdxbUtrM2ZRWVpnRzg0YWoiLCJzdWIiOjExMSwicHJ2IjoiZmM3NjgyNGZhZTMyY2JlYTIyYmZmYWRlM2I1NTIwMDA4ZjM3MDg3MiJ9.JgT3X1sKpA-XJnz1wMhqMMhvTTs9NC7H7Blaz8SD3ZE',
+
+                },
+
+
+            })
+                .then((response) => response.json())
+                .then((json) => {
+                    console.log("--------------json-------------", json)
+                    setData(json.data)
+                    setImage(json.data.image_profile);
+                })
+                .catch((error) => console.error(error))
+
+        }
+
+        asyncFetchDailyData();
+    }, []);
     const [visible, setVisible] = useState(false);
 
   const toggleBottomNavigationView = () => {
@@ -56,15 +90,15 @@ const Profile = () => {
                               <View style={styles.middle}>
                                     <TouchableOpacity onPress={toggleBottomNavigationView} style={styles.button}>
                                         {/*<Image source={parent} style={styles.img}/>*/}
-                                       <Image source={{uri: image==null?parent:image}} style={styles.img}/>
+                                       <Image source={image===null?parent:{uri:'http://192.168.1.23:8000/assets/uploads/parents/6gQMGbnf6PuGZqNsZfYMXKQNyyDv38aKXRiDEeBF.jpg'}} style={styles.img}/>
                                         <FontAwesome5 name="camera" size={22} color="black" style={styles.camera}/>
                                     </TouchableOpacity>
 
 
                                           <View style={GlobalStyles.Cardename}>
-                                            <Text  style={styles.nom}>   samir ali</Text>
-                                            <Text ><FontAwesome5 name="envelope" size={18} color="black"/>   samir@gmail.com</Text>
-                                            <Text><FontAwesome5 name="phone" size={18} color="black"/>   25 214 214</Text>
+                                            <Text  style={styles.nom}>  {data.nomPere}  {data.prenomPere}</Text>
+                                            <Text ><FontAwesome5 name="envelope" size={18} color="black"/>  {data.email} </Text>
+                                            <Text><FontAwesome5 name="phone" size={18} color="black"/>    {data.telPere}</Text>
                                           </View>
 
                                   <View>

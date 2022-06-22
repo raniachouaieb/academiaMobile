@@ -11,7 +11,7 @@ const Login = () => {
     const [email, setEmail]= useState({value:'bonetek01@mercantravellers.com', error:''});
     const [password, setPassword]= useState({value:'753214896', error:''});
     const navigation = useNavigation();
-    const URI = 'http://192.168.1.21:8000';
+    const URI = 'http://192.168.1.23:8000';
     myfunc =  async ()=>{
 
        //alert(URI + '/api/auth/login');
@@ -34,6 +34,7 @@ const Login = () => {
                     console.log(resData);
 
                     await AsyncStorage.setItem('userToken', resData.token);
+                    await AsyncStorage.setItem('id', `${resData.user}`);
 
 
                 } else {

@@ -37,7 +37,7 @@ const Emploi = () => {
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
-    const URI = 'http://192.168.1.21:8000';
+    const URI = 'http://192.168.1.23:8000';
 
     useEffect( () => {
         const asyncFetchDailyData = async () => {
@@ -57,8 +57,18 @@ const Emploi = () => {
             })
                 .then((response) => response.json())
                 .then((json) => {
-                    console.log("--------------json-------------", json)
-                    setData(json)
+
+                    let tab =  Object.keys(json[0]);
+                    let newlist = []
+                        tab.forEach(item => {
+                            if (item !== 'name')
+                                newlist.push({
+                                    lessons: json[0][item],
+                                    day: item
+                                })
+                        });
+                    console.log("--------------json-------------",newlist);
+                    setData(newlist)
                 })
                 .catch((error) => console.error(error))
                 .finally(() => setLoading(false));
@@ -66,6 +76,15 @@ const Emploi = () => {
 
         asyncFetchDailyData();
     }, []);
+    const renderlessons = (lessons)=>{
+        return lessons.map(item =>
+            <DataTable.Row>
+                <DataTable.Cell>{item.from} à {item.to} </DataTable.Cell>
+                <DataTable.Cell >{item.name}</DataTable.Cell>
+            </DataTable.Row>
+        )
+
+    }
 
 
     return(
@@ -84,16 +103,15 @@ const Emploi = () => {
                     data={data}
                     keyExtractor={(item => item.id)}
                     renderItem={({item, index}) => (
+
                 <DataTable>
                     <DataTable.Header style={styles.headertab}>
-                        <DataTable.Title>{item.lundi}</DataTable.Title>
+
+                        <DataTable.Title>{item.day}</DataTable.Title>
 
                     </DataTable.Header>
 
-                    <DataTable.Row>
-                        <DataTable.Cell>{item.lundi.from} à {item.lundi.to} </DataTable.Cell>
-                        <DataTable.Cell >{item.mercredi.name}</DataTable.Cell>
-                    </DataTable.Row>
+                    {renderlessons(item.lessons)}
 
                 </DataTable>
                     )}
