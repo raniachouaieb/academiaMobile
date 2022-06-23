@@ -25,7 +25,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile = () => {
     const navigation = useNavigation();
-    const URI = 'http://192.168.1.21:8000';
+    const URI = 'http://192.168.1.23:8000';
     const [data,setData]=useState();
     const [nomPere,setnomPere]= useState();
     const [prenomPere , setprenomPere]=useState();
@@ -34,6 +34,17 @@ const Profile = () => {
     const [kids, setkids]=useState();
     const [isloading, setisloading]=useState(false);
     const [kidspicture, setkidspicture]=useState([]);
+    const displayname =(text)=>{
+
+        switch(text)
+        {case '27':return '1ere'
+        case '28': return '2eme'
+
+        case '29':return '3eme'
+        case '30':return '1ere'
+        case '31':return '1ere'
+        case '32':return '1ere'
+    }}
 
     useEffect( async () => {
         setisloading(true);
@@ -57,11 +68,12 @@ const Profile = () => {
                 .then((response) => response.json())
                 .then((json) => {
                     console.log("--------------json-------------", json)
-                    setData(json.data)
+                    setData(json.data);
+
                     setkids(json['0']);
                     let holder=[];
                     json['0'].forEach(element =>{
-                        holder.push(element.image)
+                        holder.push('http://192.168.1.23:8000/assets/'+element.image)
 
                     })
                     console.log('-----------holder------',holder);
@@ -71,7 +83,7 @@ const Profile = () => {
                     setnomPere(json.data.nomPere)
                     settelPere(json.data.telPere)
                     setemail(json.data.email)
-                    setImage('http://192.168.1.21:8000/assets/'+json.data.image_profile);
+                    setImage('http://192.168.1.23:8000/assets/'+json.data.image_profile);
 
                     setisloading(false)
                 })
@@ -82,7 +94,18 @@ const Profile = () => {
         asyncFetchDailyData();
     }, []);
     const [visible, setVisible] = useState(false);
+    const createFormData = (uri) => {
+        const fileName = uri.split('/').pop();
+        const fileType = fileName.split('.').pop();
+        const image_profile = new FormData();
+        image_profile.append('image_profile', {
+            uri,
+            name: fileName,
+            type: `image/${fileType}`
+        });
 
+        return image_profile;
+    }
   const toggleBottomNavigationView = () => {
     //Toggling the visibility state of the bottom sheet
     setVisible(!visible);
@@ -99,6 +122,7 @@ const Profile = () => {
         let pickerResult = await ImagePicker.launchImageLibraryAsync();
         console.log(pickerResult);
         setImage(pickerResult.uri);
+
       }
     let openImagePickerAsynckids = async (id) => {
          setisloading(true)
@@ -134,7 +158,7 @@ const Profile = () => {
         setImage(pickerResult.uri);
       }
     return(
-        <ScrollView>
+
             <ImageBackground source={bc} style={styles.container} >
                 {isloading?<Text>pleasewait senior</Text>:<View>
 
@@ -156,24 +180,34 @@ const Profile = () => {
                                     <Text><FontAwesome5 name="envelope" size={18} color="black"/>{email} </Text>
                                     <Text><FontAwesome5 name="phone" size={18} color="black"/> {telPere}</Text>
                                 </View>
-                                <FlatList data={kids} renderItem={({item,index})=>{
-
+                            </View>
+                                <FlatList data={kids}
+                                          columnWrapperStyle={styles.row}
+                                          numColumns={2}
+                                          renderItem={({item,index})=>{
                                     console.log('---------------item------------',item)
 
                                     return(
-                                            <View>
+                                            <View style={{
+                                                marginBottom:10,
+                                                paddingVertical:10,
+                                                borderWidth:0.5,
+                                                borderColor:'black'
+
+                                            }}>
 
                                                 <TouchableOpacity onPress={()=>openImagePickerAsynckids(index)} style={styles.button}>
                                                     {console.log('kidspic',kidspicture)}
-                                                    <Image source={image === null ? parent : {uri: kidspicture[index]}}
+                                                    <Image source={kidspicture[index] === null ? parent : {uri: kidspicture[index]}}
                                                            style={styles.img}/>
                                                     <FontAwesome5 name="camera" size={22} color="black" style={styles.camera}/>
                                                 </TouchableOpacity>
 
                                                 <View style={styles.info}>
 
-                                                    <Text style={styles.nom}><FontAwesome5 name="user" size={18}
-                                                        color="black"/>{item.nomEleve} {item.prenomEleve} </Text>
+                                                    <Text style={styles.nom}>{item.nomEleve} {item.prenomEleve} </Text>
+                                                    <Text style={{color:'grey', textAlign:'center',}}>{displayname(item.niveau)}
+                                                     </Text>
                                                 </View>
                                             </View>
                                         )
@@ -186,7 +220,7 @@ const Profile = () => {
                                 />
 
 
-                            </View>
+
 
                         </View>
 
@@ -234,7 +268,7 @@ const Profile = () => {
 
                 </View>}
             </ImageBackground>
-        </ScrollView>
+
 
        
     )
@@ -262,7 +296,10 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
     },
-   
+    row: {
+        flex: 1,
+        justifyContent: "space-around"
+    },
     header:{
         flex: 1,
         width: 360,
@@ -286,14 +323,12 @@ const styles = StyleSheet.create({
      },
      cardContainer:{
         width: deviceWidth - 20,
-        margin:8,
-        marginTop:15,
+         marginVertical:15,
         backgroundColor:'#fff',
-        height:350,
         borderRadius:5,
         shadowColor:'#000',
         shadowOffset: {width:2, height:4},
-        shadowOpacity:0.1,
+        shadowOpacity:0.4,
         shadowRadius: -1,
         elevation: 9,
         opacity:0.9,
