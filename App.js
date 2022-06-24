@@ -32,6 +32,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import  { useState, useEffect, useRef } from 'react';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -190,6 +191,7 @@ async function registerForPushNotificationsAsync() {
             return;
         }
         token = (await Notifications.getExpoPushTokenAsync()).data;
+        await AsyncStorage.setItem('device_token', token);
         console.log(token);
     } else {
         alert('Must use physical device for Push Notifications');

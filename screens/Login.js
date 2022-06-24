@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity} from 'react-native'
 import { Input, Icon, NativeBaseProvider, Button, InputRightAddon } from 'native-base'
 import { FontAwesome5 } from '@expo/vector-icons'
@@ -6,15 +6,20 @@ import bc from '../assets/bc.jpg';
 import logo from '../assets/logo.png';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import * as Notifications from "expo-notifications";
 const Login = () => {
     const [email, setEmail]= useState({value:'bonetek01@mercantravellers.com', error:''});
     const [password, setPassword]= useState({value:'753214896', error:''});
+    const [tokenD, setDeviceToken] = useState({value: '', error: ''})
+
     const navigation = useNavigation();
     const URI = 'http://192.168.1.23:8000';
+
+
     myfunc =  async ()=>{
 
        //alert(URI + '/api/auth/login');
+        let device_token= await AsyncStorage.getItem('device_token');
         await fetch( URI + '/api/auth/login',{
             method:'post',
             headers:{
@@ -23,7 +28,7 @@ const Login = () => {
 
 
             },
-            body: JSON.stringify({"email": email.value, "password": password.value})
+            body: JSON.stringify({"email": email.value, "password": password.value ,"device_token":device_token})
 
 
         }).then(res => res.json())
